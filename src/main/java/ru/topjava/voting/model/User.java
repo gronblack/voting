@@ -39,7 +39,7 @@ public class User extends AbstractNamedEntity {
     @BatchSize(size = 200)
     private Set<Role> roles;
 
-//    @OneToMany(mappedBy = "user")
+//    @OneToMany(mappedBy = "user") -upd
 //    @OrderBy("date DESC")
 //    @JsonManagedReference
 //    @OnDelete(action = OnDeleteAction.CASCADE)

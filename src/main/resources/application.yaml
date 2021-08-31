@@ -1,3 +1,8 @@
+db:
+  path: mem:voting
+  name: voting
+  port: 9092
+
 spring:
   jpa:
     show-sql: true
@@ -10,9 +15,7 @@ spring:
         default_batch_fetch_size: 20
         jdbc.batch_size: 20
   datasource:
-    # ImMemory
     driver-class-name: org.hsqldb.jdbc.JDBCDriver
-    # https://www.baeldung.com/spring-boot-hsqldb#2-the-applicationpropertiesfile
-    url: jdbc:hsqldb:mem:voting;DB_CLOSE_DELAY=-1
+    url: jdbc:hsqldb:{{db.path}};DB_CLOSE_DELAY=-1  # https://www.baeldung.com/spring-boot-hsqldb#2-the-applicationpropertiesfile
     username: sa
     password:

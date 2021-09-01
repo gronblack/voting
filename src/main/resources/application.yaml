@@ -1,8 +1,3 @@
-#db:
-#  path: mem:voting
-#  name: voting
-#  port: 9092
-
 spring:
   jpa:
     show-sql: true
@@ -17,13 +12,7 @@ spring:
         default_batch_fetch_size: 20
         jdbc.batch_size: 20
   datasource:
-#    driver-class-name: org.hsqldb.jdbc.JDBCDriver
-#    url: jdbc:hsqldb:{{db.path}};DB_CLOSE_DELAY=-1  # https://www.baeldung.com/spring-boot-hsqldb#2-the-applicationpropertiesfile
-#    url: jdbc:hsqldb:file:E:/otherbases/voting;DB_CLOSE_DELAY=-1
-    url: jdbc:h2:mem:voting  # https://www.baeldung.com/spring-boot-hsqldb#2-the-applicationpropertiesfile
+    url: jdbc:h2:mem:voting
     username: sa
     password:
   h2.console.enabled: true
-#  sql:
-#    init:
-#      mode: always

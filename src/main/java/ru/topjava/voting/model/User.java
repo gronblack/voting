@@ -16,7 +16,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class User extends AbstractNamedEntity {
+public class User extends AbstractNamedEntity implements HasIdAndEmail {
     @Column(name = "email", nullable = false, unique = true)
     @Email
     @NotBlank
@@ -59,6 +59,7 @@ public class User extends AbstractNamedEntity {
         setRoles(roles);
     }
 
+    @Override
     public String getEmail() {
         return email;
     }

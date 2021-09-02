@@ -1,5 +1,7 @@
 package ru.topjava.voting.model;
 
+import ru.topjava.voting.util.validation.NoHtml;
+
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotBlank;
@@ -10,6 +12,7 @@ public abstract class NamedEntity extends BaseEntity {
     @Column(name = "name", nullable = false)
     @NotBlank
     @Size(max = 100)
+    @NoHtml
     protected String name;
 
     protected NamedEntity() {

@@ -1,6 +1,7 @@
 package ru.topjava.voting.to;
 
 import ru.topjava.voting.model.HasIdAndEmail;
+import ru.topjava.voting.util.validation.NoHtml;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -15,11 +16,11 @@ public class UserTo extends NamedTo implements HasIdAndEmail, Serializable {
     @Email
     @NotBlank
     @Size(max = 100)
-    //@NoHtml // https://stackoverflow.com/questions/17480809
+    @NoHtml // https://stackoverflow.com/questions/17480809
     private String email;
 
     @NotBlank
-    @Size(min = 5, max = 32)
+    @Size(min = 5, max = 20)
     private String password;
 
     public UserTo() {

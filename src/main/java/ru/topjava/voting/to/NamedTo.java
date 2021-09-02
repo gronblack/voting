@@ -1,12 +1,14 @@
 package ru.topjava.voting.to;
 
+import ru.topjava.voting.util.validation.NoHtml;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 public abstract class NamedTo extends BaseTo {
     @NotBlank
     @Size(min = 2, max = 100)
-    //@NoHtml
+    @NoHtml
     protected String name;
 
     public NamedTo() {

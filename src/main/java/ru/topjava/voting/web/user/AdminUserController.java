@@ -39,6 +39,11 @@ public class AdminUserController extends AbstractUserController {
         return ResponseEntity.of(repository.getByEmail(email));
     }
 
+//    @GetMapping("/{id}/with-votes")
+//    public ResponseEntity<User> getWithMeals(@PathVariable int id) {
+//        return super.getWithVotes(id);
+//    }
+
     @Override
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -66,4 +71,14 @@ public class AdminUserController extends AbstractUserController {
         assureIdConsistent(user, id);
         prepareAndSave(user);
     }
+
+//    @PatchMapping("/{id}")
+//    @ResponseStatus(HttpStatus.NO_CONTENT)
+//    @Transactional
+//    //@CacheEvict(allEntries = true)
+//    public void enable(@PathVariable int id, @RequestParam boolean enabled) {
+//        log.info(enabled ? "enable {}" : "disable {}", id);
+//        User user = repository.getById(id);
+//        user.setEnabled(enabled);
+//    }
 }

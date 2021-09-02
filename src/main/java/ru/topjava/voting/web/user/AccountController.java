@@ -8,16 +8,20 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.topjava.voting.model.User;
+import ru.topjava.voting.to.UserTo;
 import ru.topjava.voting.util.UserUtil;
 import ru.topjava.voting.web.AuthUser;
 
 import javax.validation.Valid;
 import java.net.URI;
 
+import static ru.topjava.voting.util.validation.ValidationUtil.assureIdConsistent;
+import static ru.topjava.voting.util.validation.ValidationUtil.checkNew;
+
 @RestController
 @RequestMapping(value = AccountController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 //@CacheConfig(cacheNames = "users")
-public class AccountController extends AbstractUserController {
+public class AccountController extends BaseUserController {
     static final String REST_URL = "/api/account";
 
     @GetMapping
@@ -31,27 +35,27 @@ public class AccountController extends AbstractUserController {
         super.delete(authUser.id());
     }
 
-//    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-//    @ResponseStatus(HttpStatus.CREATED)
-//    //@CacheEvict(allEntries = true)
-//    public ResponseEntity<User> register(@Valid @RequestBody UserTo userTo) {
-//        log.info("register {}", userTo);
-//        checkNew(userTo);
-//        User created = prepareAndSave(UserUtil.createNewFromTo(userTo));
-//        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-//                .path(REST_URL).build().toUri();
-//        return ResponseEntity.created(uriOfNewResource).body(created);
-//    }
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
+    //@CacheEvict(allEntries = true)
+    public ResponseEntity<User> register(@Valid @RequestBody UserTo userTo) {
+        log.info("register {}", userTo);
+        checkNew(userTo);
+        User created = prepareAndSave(UserUtil.createNewFromTo(userTo));
+        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path(REST_URL).build().toUri();
+        return ResponseEntity.created(uriOfNewResource).body(created);
+    }
 
-//    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    @Transactional
-//    //@CacheEvict(allEntries = true)
-//    public void update(@RequestBody @Valid UserTo userTo, @AuthenticationPrincipal AuthUser authUser) {
-//        assureIdConsistent(userTo, authUser.id());
-//        User user = authUser.getUser();
-//        prepareAndSave(UserUtil.updateFromTo(user, userTo));
-//    }
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Transactional
+    //@CacheEvict(allEntries = true)
+    public void update(@RequestBody @Valid UserTo userTo, @AuthenticationPrincipal AuthUser authUser) {
+        assureIdConsistent(userTo, authUser.id());
+        User user = authUser.getUser();
+        prepareAndSave(UserUtil.updateFromTo(user, userTo));
+    }
 
 //    @GetMapping("/with-votes")
 //    public ResponseEntity<User> getWithVotes(@AuthenticationPrincipal AuthUser authUser) {

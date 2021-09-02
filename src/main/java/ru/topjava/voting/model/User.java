@@ -16,7 +16,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class User extends AbstractNamedEntity implements HasIdAndEmail {
+public class User extends NamedEntity implements HasIdAndEmail {
     @Column(name = "email", nullable = false, unique = true)
     @Email
     @NotBlank
@@ -28,6 +28,9 @@ public class User extends AbstractNamedEntity implements HasIdAndEmail {
     @Size(min = 5, max = 20)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
+
+    @Column(name = "enabled", nullable = false, columnDefinition = "bool default true")
+    private boolean enabled = true;
 
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
@@ -82,6 +85,14 @@ public class User extends AbstractNamedEntity implements HasIdAndEmail {
 
     public void setRoles(Set<Role> roles) {
         this.roles = CollectionUtils.isEmpty(roles) ? EnumSet.noneOf(Role.class) : EnumSet.copyOf(roles);
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     @Override

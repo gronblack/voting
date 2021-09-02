@@ -4,6 +4,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.topjava.voting.model.User;
@@ -17,7 +18,7 @@ import static ru.topjava.voting.util.validation.ValidationUtil.checkNew;
 
 @RestController
 @RequestMapping(value = AdminUserController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-public class AdminUserController extends AbstractUserController {
+public class AdminUserController extends BaseUserController {
     static final String REST_URL = "/api/admin/users";
 
     @GetMapping
@@ -40,7 +41,7 @@ public class AdminUserController extends AbstractUserController {
     }
 
 //    @GetMapping("/{id}/with-votes")
-//    public ResponseEntity<User> getWithMeals(@PathVariable int id) {
+//    public ResponseEntity<User> getWithVotes(@PathVariable int id) {
 //        return super.getWithVotes(id);
 //    }
 
@@ -72,13 +73,13 @@ public class AdminUserController extends AbstractUserController {
         prepareAndSave(user);
     }
 
-//    @PatchMapping("/{id}")
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    @Transactional
-//    //@CacheEvict(allEntries = true)
-//    public void enable(@PathVariable int id, @RequestParam boolean enabled) {
-//        log.info(enabled ? "enable {}" : "disable {}", id);
-//        User user = repository.getById(id);
-//        user.setEnabled(enabled);
-//    }
+    @PatchMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Transactional
+    //@CacheEvict(allEntries = true)
+    public void enable(@PathVariable int id, @RequestParam boolean enabled) {
+        log.info(enabled ? "enable {}" : "disable {}", id);
+        User user = repository.getById(id);
+        user.setEnabled(enabled);
+    }
 }

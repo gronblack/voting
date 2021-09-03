@@ -22,7 +22,6 @@ public class UserUtil {
 
     public static User prepareToSave(User user) {
         user.setPassword(PASSWORD_ENCODER.encode(user.getPassword()));
-        user.setPassword("new pass");
         user.setEmail(user.getEmail().toLowerCase());
         return user;
     }

@@ -1,5 +1,6 @@
 package ru.topjava.voting.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.OnDelete;
@@ -12,10 +13,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Collection;
-import java.util.Date;
-import java.util.EnumSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "users")
@@ -50,7 +48,7 @@ public class User extends NamedEntity implements HasIdAndEmail {
     @BatchSize(size = 200)
     private Set<Role> roles;
 
-//    @OneToMany(mappedBy = "user") -upd
+//    @OneToMany(mappedBy = "user")
 //    @OrderBy("date DESC")
 //    @JsonManagedReference
 //    @OnDelete(action = OnDeleteAction.CASCADE)
@@ -116,6 +114,14 @@ public class User extends NamedEntity implements HasIdAndEmail {
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
+
+//    public List<Vote> getVotes() {
+//        return votes;
+//    }
+//
+//    public void setVotes(List<Vote> votes) {
+//        this.votes = votes;
+//    }
 
     @Override
     public String toString() {

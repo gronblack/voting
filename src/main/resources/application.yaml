@@ -7,7 +7,6 @@ spring:
       ddl-auto: create-drop
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.HSQLDialect
         format_sql: true
         default_batch_fetch_size: 20
         jdbc.batch_size: 20
@@ -16,3 +15,11 @@ spring:
     username: sa
     password:
   h2.console.enabled: true
+
+  # Jackson Serialization Issue Resolver
+  jackson:
+    visibility:
+      field: any
+      getter: none
+      setter: none
+      is-getter: none

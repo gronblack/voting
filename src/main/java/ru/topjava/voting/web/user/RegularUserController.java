@@ -19,9 +19,9 @@ import static ru.topjava.voting.util.validation.ValidationUtil.assureIdConsisten
 import static ru.topjava.voting.util.validation.ValidationUtil.checkNew;
 
 @RestController
-@RequestMapping(value = AccountController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = RegularUserController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 //@CacheConfig(cacheNames = "users")
-public class AccountController extends BaseUserController {
+public class RegularUserController extends BaseUserController {
     static final String REST_URL = "/api/account";
 
     @GetMapping

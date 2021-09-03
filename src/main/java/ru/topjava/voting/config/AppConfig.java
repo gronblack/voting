@@ -1,6 +1,8 @@
 package ru.topjava.voting.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.Module;
+import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
 import org.h2.tools.Server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +22,12 @@ public class AppConfig {
     public Server h2Server() throws SQLException {
         log.info("Start H2 TCP server");
         return AppUtil.createTcpServer();
+    }
+
+    //    https://stackoverflow.com/a/46947975/548473
+    @Bean
+    Module module() {
+        return new Hibernate5Module();
     }
 
     @Autowired

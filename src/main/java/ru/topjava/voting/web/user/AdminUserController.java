@@ -28,10 +28,10 @@ public class AdminUserController extends BaseUserController {
         return repository.findAll(Sort.by(Sort.Direction.ASC, "name", "email"));
     }
 
-    @Override
     @GetMapping("/{id}")
     public ResponseEntity<User> get(@PathVariable int id) {
-        return super.get(id);
+        log.info("get {}", id);
+        return ResponseEntity.of(repository.findById(id));
     }
 
     @GetMapping("/by")

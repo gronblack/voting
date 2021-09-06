@@ -1,10 +1,13 @@
 package ru.topjava.voting.web;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -18,6 +21,7 @@ import static ru.topjava.voting.util.AppUtil.stopTCPServer;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
+//@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @Transactional
 @AutoConfigureMockMvc
 public abstract class AbstractControllerTest {
@@ -35,4 +39,9 @@ public abstract class AbstractControllerTest {
         stopTCPServer();
         createTcpServer();
     }
+
+//    @AfterEach
+//    void endTest() {
+//        stopTCPServer();
+//    }
 }

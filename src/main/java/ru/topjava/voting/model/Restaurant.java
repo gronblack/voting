@@ -24,6 +24,7 @@ public class Restaurant extends NamedEntity {
 
     @OneToMany(mappedBy = "restaurant")
     @OrderBy("date DESC")
+    @JsonManagedReference
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Vote> votes;
 

@@ -24,7 +24,7 @@ public class AppConfig {
         return AppUtil.createTcpServer();
     }
 
-    //    https://stackoverflow.com/a/46947975/548473
+    // https://stackoverflow.com/a/46947975/548473
     @Bean
     Module module() {
         return new Hibernate5Module();

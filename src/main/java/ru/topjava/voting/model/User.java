@@ -1,6 +1,5 @@
 package ru.topjava.voting.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.OnDelete;
@@ -26,7 +25,7 @@ public class User extends NamedEntity implements HasIdAndEmail {
 
     @Column(name = "password")
     @NotBlank
-    @Size(min = 5, max = 20)
+    @Size(min = 5, max = 68)    // -upd
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
@@ -48,11 +47,11 @@ public class User extends NamedEntity implements HasIdAndEmail {
     @BatchSize(size = 200)
     private Set<Role> roles;
 
-//    @OneToMany(mappedBy = "user")
-//    @OrderBy("date DESC")
-//    @JsonManagedReference
-//    @OnDelete(action = OnDeleteAction.CASCADE)
-//    private List<Vote> votes;
+    @OneToMany(mappedBy = "user")
+    //@OrderBy("date DESC")
+    //@JsonManagedReference
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private List<Vote> votes;
 
     public User() {
     }

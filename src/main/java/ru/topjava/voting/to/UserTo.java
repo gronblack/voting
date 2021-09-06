@@ -11,7 +11,7 @@ import java.io.Serializable;
 
 public class UserTo extends NamedTo implements HasIdAndEmail, Serializable {
     @Serial
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 7747547401459053473L;
 
     @Email
     @NotBlank

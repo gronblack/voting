@@ -24,13 +24,13 @@ public abstract class BaseUserController {
     }
 
     //@CacheEvict(value = "users", allEntries = true)
-    public void delete(int id) {
+    protected void delete(int id) {
         log.info("delete {}", id);
         repository.deleteExisted(id);
     }
 
-//    public ResponseEntity<User> getWithVotes(int id) {
-//        log.info("getWithMeals {}", id);
+//    protected ResponseEntity<User> getWithVotes(int id) {
+//        log.info("getWithVotes {}", id);
 //        return ResponseEntity.of(repository.getWithVotes(id));
 //    }
 

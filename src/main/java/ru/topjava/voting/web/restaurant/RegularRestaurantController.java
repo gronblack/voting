@@ -1,5 +1,6 @@
 package ru.topjava.voting.web.restaurant;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,11 +19,28 @@ public class RegularRestaurantController extends BaseRestaurantController {
     @GetMapping
     //@Cacheable -upd
     public List<Restaurant> getAll() {
-        return super.getAll();
+        log.info("getAll");
+        return repository.findAll(Sort.by(Sort.Direction.ASC, "name"));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Restaurant> get(@PathVariable int id) {
-        return super.get(id);
+        log.info("get {}", id);
+        return ResponseEntity.of(repository.findById(id));
     }
+
+//    @GetMapping("/with-rating")
+//    public List<RestaurantTo> getAllWithRating() {
+//        return super.getAllWithRating();
+//    }
+//
+//    @GetMapping("/{id}/with-votes")
+//    public ResponseEntity<Restaurant> getWithVotes(@PathVariable int id) {
+//        return super.getWithVotes(id);
+//    }
+//
+//    @GetMapping("/{id}/with-rating")
+//    public ResponseEntity<RestaurantTo> getWithRating(@PathVariable int id) {
+//        return super.getWithRating(id);
+//    }
 }

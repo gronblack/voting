@@ -1,6 +1,6 @@
 package ru.topjava.voting.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -12,20 +12,23 @@ import java.util.List;
 public class Restaurant extends NamedEntity {
     @OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)
     @OrderBy("date DESC")
-    @JsonManagedReference
+    //@JsonManagedReference
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
     private List<Menu> menus;
 
     @OneToMany(mappedBy = "restaurant")
     @OrderBy("name DESC")
-    @JsonManagedReference
+    //@JsonManagedReference
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
     private List<Dish> dishes;
 
     @OneToMany(mappedBy = "restaurant")
     @OrderBy("date DESC")
-    @JsonManagedReference
+    //@JsonManagedReference
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
     private List<Vote> votes;
 
     public Restaurant() {

@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.topjava.voting.model.Role;
 import ru.topjava.voting.model.User;
 import ru.topjava.voting.repository.UserRepository;
-import ru.topjava.voting.web.AbstractControllerTest;
+import ru.topjava.voting.web.BaseControllerTest;
 import ru.topjava.voting.web.GlobalExceptionHandler;
 
 import static org.hamcrest.Matchers.containsString;
@@ -19,9 +19,10 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static ru.topjava.voting.web.user.UserTestData.*;
+import static ru.topjava.voting.web.TestData.ForUser.*;
+import static ru.topjava.voting.web.TestData.NOT_FOUND_ID;
 
-public class AdminUserControllerTest extends AbstractControllerTest {
+public class AdminUserControllerTest extends BaseControllerTest {
     private static final String REST_URL = AdminUserController.REST_URL + '/';
 
     @Autowired
@@ -35,13 +36,13 @@ public class AdminUserControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 // https://jira.spring.io/browse/SPR-14472
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MATCHER.contentJson(admin));
+                .andExpect(USER_MATCHER.contentJson(admin));
     }
 
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void getNotFound() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + NOT_FOUND))
+        perform(MockMvcRequestBuilders.get(REST_URL + NOT_FOUND_ID))
                 .andDo(print())
                 .andExpect(status().isNotFound());
     }
@@ -52,7 +53,7 @@ public class AdminUserControllerTest extends AbstractControllerTest {
         perform(MockMvcRequestBuilders.get(REST_URL + "by?email=" + admin.getEmail()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MATCHER.contentJson(admin));
+                .andExpect(USER_MATCHER.contentJson(admin));
     }
 
 //    @Test
@@ -71,7 +72,7 @@ public class AdminUserControllerTest extends AbstractControllerTest {
         perform(MockMvcRequestBuilders.get(REST_URL))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MATCHER.contentJson(admin, user));
+                .andExpect(USER_MATCHER.contentJson(admin, user));
     }
 
     @Test
@@ -86,7 +87,7 @@ public class AdminUserControllerTest extends AbstractControllerTest {
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void deleteNotFound() throws Exception {
-        perform(MockMvcRequestBuilders.delete(REST_URL + NOT_FOUND))
+        perform(MockMvcRequestBuilders.delete(REST_URL + NOT_FOUND_ID))
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity());
     }
@@ -106,7 +107,7 @@ public class AdminUserControllerTest extends AbstractControllerTest {
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void enableNotFound() throws Exception {
-        perform(MockMvcRequestBuilders.patch(REST_URL + NOT_FOUND)
+        perform(MockMvcRequestBuilders.patch(REST_URL + NOT_FOUND_ID)
                 .param("enabled", "false")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
@@ -137,7 +138,7 @@ public class AdminUserControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(status().isNoContent());
 
-        MATCHER.assertMatch(userRepository.getById(USER_ID), getUpdated());
+        USER_MATCHER.assertMatch(userRepository.getById(USER_ID), getUpdated());
     }
 
     @Test
@@ -148,11 +149,11 @@ public class AdminUserControllerTest extends AbstractControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonWithPassword(newUser, newUser.getPassword())))
                 .andExpect(status().isCreated());
-        User created = MATCHER.readFromJson(action);
+        User created = USER_MATCHER.readFromJson(action);
         int newId = created.id();
         newUser.setId(newId);
-        MATCHER.assertMatch(created, newUser);
-        MATCHER.assertMatch(userRepository.getById(newId), newUser);
+        USER_MATCHER.assertMatch(created, newUser);
+        USER_MATCHER.assertMatch(userRepository.getById(newId), newUser);
     }
 
     @Test

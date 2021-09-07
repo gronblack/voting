@@ -51,7 +51,9 @@ VALUES ('Noma lunch 1', CURRENT_DATE, 1),
 --        (6, 9);  /* Asador lunch 2, Chocolate ice cream */
 
 INSERT INTO vote (date, user_id, restaurant_id)
-VALUES (CURDATE(), 1, 2),
+VALUES ('2020-05-20', 1, 1),
+       ('2020-05-20', 2, 1),
+       (CURDATE(), 1, 2),
        (DATEADD('DAY', -1, CURDATE()), 1, 3),
        (DATEADD('DAY', -2, CURDATE()), 1, 1),
        (CURDATE(), 2, 3),

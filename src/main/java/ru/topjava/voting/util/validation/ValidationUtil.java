@@ -4,6 +4,8 @@ import ru.topjava.voting.error.IllegalRequestDataException;
 import ru.topjava.voting.error.NotFoundException;
 import ru.topjava.voting.model.HasId;
 
+import java.time.LocalDate;
+
 public class ValidationUtil {
     public static void checkNew(HasId bean) {
         if (!bean.isNew()) {
@@ -23,6 +25,12 @@ public class ValidationUtil {
     public static void checkModification(int count, int id) {
         if (count == 0) {
             throw new NotFoundException("Entity with id=" + id + " not found");
+        }
+    }
+
+    public static void checkDate(LocalDate expected, LocalDate actual) {
+        if (!expected.isEqual(actual)) {
+            throw new IllegalRequestDataException("Expected date " + expected + " but was " + actual);
         }
     }
 }

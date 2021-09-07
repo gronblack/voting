@@ -1,5 +1,6 @@
 package ru.topjava.voting.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.OnDelete;
@@ -51,6 +52,7 @@ public class User extends NamedEntity implements HasIdAndEmail {
     //@OrderBy("date DESC")
     //@JsonManagedReference
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
     private List<Vote> votes;
 
     public User() {

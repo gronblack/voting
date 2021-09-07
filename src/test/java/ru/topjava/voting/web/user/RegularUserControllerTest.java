@@ -11,7 +11,7 @@ import ru.topjava.voting.repository.UserRepository;
 import ru.topjava.voting.to.UserTo;
 import ru.topjava.voting.util.JsonUtil;
 import ru.topjava.voting.util.UserUtil;
-import ru.topjava.voting.web.AbstractControllerTest;
+import ru.topjava.voting.web.BaseControllerTest;
 import ru.topjava.voting.web.GlobalExceptionHandler;
 
 import static org.hamcrest.Matchers.containsString;
@@ -19,9 +19,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.topjava.voting.web.user.RegularUserController.REST_URL;
-import static ru.topjava.voting.web.user.UserTestData.*;
+import static ru.topjava.voting.web.TestData.ForUser.*;
 
-class RegularUserControllerTest extends AbstractControllerTest {
+class RegularUserControllerTest extends BaseControllerTest {
     @Autowired
     private UserRepository userRepository;
 
@@ -31,7 +31,7 @@ class RegularUserControllerTest extends AbstractControllerTest {
         perform(MockMvcRequestBuilders.get(REST_URL))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MATCHER.contentJson(user));
+                .andExpect(USER_MATCHER.contentJson(user));
     }
 
 //    @Test
@@ -55,7 +55,7 @@ class RegularUserControllerTest extends AbstractControllerTest {
     void delete() throws Exception {
         perform(MockMvcRequestBuilders.delete(REST_URL))
                 .andExpect(status().isNoContent());
-        MATCHER.assertMatch(userRepository.findAll(), admin);
+        USER_MATCHER.assertMatch(userRepository.findAll(), admin);
     }
 
     @Test
@@ -68,11 +68,11 @@ class RegularUserControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(status().isCreated());
 
-        User created = MATCHER.readFromJson(action);
+        User created = USER_MATCHER.readFromJson(action);
         int newId = created.id();
         newUser.setId(newId);
-        MATCHER.assertMatch(created, newUser);
-        MATCHER.assertMatch(userRepository.getById(newId), newUser);
+        USER_MATCHER.assertMatch(created, newUser);
+        USER_MATCHER.assertMatch(userRepository.getById(newId), newUser);
     }
 
     @Test
@@ -94,7 +94,7 @@ class RegularUserControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(status().isNoContent());
 
-        MATCHER.assertMatch(userRepository.getById(USER_ID), UserUtil.updateFromTo(new User(user), updatedTo));
+        USER_MATCHER.assertMatch(userRepository.getById(USER_ID), UserUtil.updateFromTo(new User(user), updatedTo));
     }
 
     @Test

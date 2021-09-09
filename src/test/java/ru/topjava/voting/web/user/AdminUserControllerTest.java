@@ -144,7 +144,7 @@ public class AdminUserControllerTest extends BaseControllerTest {
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void createWithLocation() throws Exception {
-        User newUser = getNew();
+        User newUser = getNewUser();
         ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonWithPassword(newUser, newUser.getPassword())))

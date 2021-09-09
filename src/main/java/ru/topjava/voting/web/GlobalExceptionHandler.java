@@ -27,6 +27,7 @@ import static org.springframework.boot.web.error.ErrorAttributeOptions.Include.M
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
     public static final String EXCEPTION_DUPLICATE_EMAIL = "User with this email already exists";
+    public static final String EXCEPTION_TOO_LATE_FOR_VOTING = "Too late for create or change vote today! Try tomorrow";
 
     private final ErrorAttributes errorAttributes;
 

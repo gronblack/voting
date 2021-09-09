@@ -5,13 +5,16 @@ import ru.topjava.voting.model.Restaurant;
 import ru.topjava.voting.model.Role;
 import ru.topjava.voting.model.User;
 import ru.topjava.voting.model.Vote;
+import ru.topjava.voting.service.VoteService;
 import ru.topjava.voting.util.JsonUtil;
 
-import java.time.LocalDate;
-import java.time.Month;
+import java.time.*;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+
+import static ru.topjava.voting.service.VoteService.VOTE_TIME_BORDER;
+import static ru.topjava.voting.web.TestData.ForRestaurant.restaurantMirazur;
 
 public class TestData {
     public static final int EXIST_ID = 1;
@@ -27,7 +30,7 @@ public class TestData {
         public static final User user = new User(USER_ID, "User", USER_MAIL, "password", Role.USER);
         public static final User admin = new User(ADMIN_ID, "Admin", ADMIN_MAIL, "admin", Role.ADMIN, Role.USER);
 
-        public static User getNew() {
+        public static User getNewUser() {
             return new User(null, "New", "new@gmail.com", "{noop}newPassword", false, new Date(), Collections.singleton(Role.USER));
         }
 
@@ -43,12 +46,27 @@ public class TestData {
     public static class ForRestaurant {
         public static final MatcherFactory.Matcher<Restaurant> RESTAURANT_MATCHER =
                 MatcherFactory.usingIgnoringFieldsComparator(Restaurant.class, "menus", "votes", "dishes");
-        public static final Restaurant restaurant = new Restaurant(1, "Noma");
+        public static final Restaurant restaurantNoma = new Restaurant(1, "Noma");
+        public static final Restaurant restaurantMirazur = new Restaurant(2, "Mirazur");
     }
 
     public static class ForVote {
         public static final MatcherFactory.Matcher<Vote> VOTE_MATCHER = MatcherFactory.usingEqualsComparator(Vote.class);
+        public static final int USER_VOTE_1_ID = 1;
+        public static final int USER_VOTE_TODAY_ID = 5;
         public static final int ADMIN_VOTE_ID = 2;
-        public static final Vote vote = new Vote(LocalDate.of(2020, Month.MAY, 20), ForUser.user, ForRestaurant.restaurant);
+        public static final Vote userVote1 = new Vote(1, LocalDate.of(2020, Month.MAY, 20), ForUser.user, ForRestaurant.restaurantNoma);
+        public static final Vote userVote3 = new Vote(3, LocalDate.of(2020, Month.MAY, 21), ForUser.user, ForRestaurant.restaurantNoma);
+        public static final Vote userVote5Today = new Vote(USER_VOTE_TODAY_ID, LocalDate.now(), ForUser.user, ForRestaurant.restaurantMirazur);
+
+        public static Clock voteBorderClock(boolean before) {
+            LocalTime time = VOTE_TIME_BORDER.minusMinutes(before ? 1 : 0);
+            Instant instant = LocalDateTime.of(LocalDate.now(), time).toInstant(OffsetDateTime.now().getOffset());
+            return Clock.fixed(instant, ZoneId.systemDefault());
+        }
+
+        public static Vote getNewVote(User user, Restaurant restaurant) {
+            return new Vote(null, LocalDate.now(VoteService.getClock()), user, restaurant);
+        }
     }
 }

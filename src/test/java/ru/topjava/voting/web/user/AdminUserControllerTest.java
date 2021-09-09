@@ -34,7 +34,6 @@ public class AdminUserControllerTest extends BaseControllerTest {
         perform(MockMvcRequestBuilders.get(REST_URL + ADMIN_ID))
                 .andExpect(status().isOk())
                 .andDo(print())
-                // https://jira.spring.io/browse/SPR-14472
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(USER_MATCHER.contentJson(admin));
     }
@@ -55,16 +54,6 @@ public class AdminUserControllerTest extends BaseControllerTest {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(USER_MATCHER.contentJson(admin));
     }
-
-//    @Test
-//    @WithUserDetails(value = ADMIN_MAIL)
-//    void getWithVotes() throws Exception {
-//        perform(MockMvcRequestBuilders.get(REST_URL + ADMIN_ID + "/with-votes"))
-//                .andExpect(status().isOk())
-//                .andDo(print())
-//                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-//                .andExpect(WITH_VOTES_MATCHER.contentJson(admin));
-//    }
 
     @Test
     @WithUserDetails(value = ADMIN_MAIL)

@@ -17,6 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static ru.topjava.voting.web.TestData.ForRestaurant.*;
 import static ru.topjava.voting.web.TestData.ForUser.ADMIN_MAIL;
 import static ru.topjava.voting.web.TestData.EXIST_ID;
+import static ru.topjava.voting.web.TestData.ForUser.USER_MAIL;
 import static ru.topjava.voting.web.TestData.NOT_FOUND_ID;
 
 class AdminRestaurantControllerTest extends BaseControllerTest {
@@ -24,6 +25,13 @@ class AdminRestaurantControllerTest extends BaseControllerTest {
 
     @Autowired
     protected RestaurantRepository repository;
+
+    @Test
+    @WithUserDetails(value = USER_MAIL)
+    void getForbidden() throws Exception {
+        perform(MockMvcRequestBuilders.get(REST_URL))
+                .andExpect(status().isForbidden());
+    }
 
     @Test
     @WithUserDetails(value = ADMIN_MAIL)

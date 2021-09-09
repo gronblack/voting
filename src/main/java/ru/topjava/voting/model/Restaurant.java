@@ -11,21 +11,21 @@ import java.util.List;
 @Table(name = "restaurant")
 public class Restaurant extends NamedEntity {
     @OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)
-    @OrderBy("date DESC")
+    //@OrderBy("date DESC")
     //@JsonManagedReference
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private List<Menu> menus;
 
     @OneToMany(mappedBy = "restaurant")
-    @OrderBy("name DESC")
+    //@OrderBy("name DESC")
     //@JsonManagedReference
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private List<Dish> dishes;
 
     @OneToMany(mappedBy = "restaurant")
-    @OrderBy("date DESC")
+    //@OrderBy("date DESC")
     //@JsonManagedReference
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
@@ -38,27 +38,27 @@ public class Restaurant extends NamedEntity {
         super(id, name);
     }
 
-    public List<Menu> getMenus() {
-        return menus;
-    }
-
-    public void setMenus(List<Menu> menus) {
-        this.menus = menus;
-    }
-
-    public List<Dish> getDishes() {
-        return dishes;
-    }
-
-    public void setDishes(List<Dish> dishes) {
-        this.dishes = dishes;
-    }
-
-    public List<Vote> getVotes() {
-        return votes;
-    }
-
-    public void setVotes(List<Vote> votes) {
-        this.votes = votes;
-    }
+//    public List<Menu> getMenus() {
+//        return menus;
+//    }
+//
+//    public void setMenus(List<Menu> menus) {
+//        this.menus = menus;
+//    }
+//
+//    public List<Dish> getDishes() {
+//        return dishes;
+//    }
+//
+//    public void setDishes(List<Dish> dishes) {
+//        this.dishes = dishes;
+//    }
+//
+//    public List<Vote> getVotes() {
+//        return votes;
+//    }
+//
+//    public void setVotes(List<Vote> votes) {
+//        this.votes = votes;
+//    }
 }

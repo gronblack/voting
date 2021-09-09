@@ -1,12 +1,15 @@
 package ru.topjava.voting.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @Entity
 @Table(name = "menu", uniqueConstraints = {@UniqueConstraint(columnNames = {"id", "restaurant_id"}, name = "menu_restaurant_idx")})
@@ -17,11 +20,13 @@ public class Menu extends NamedEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id", nullable = false)
-    @JsonBackReference
+    //@JsonBackReference
     private Restaurant restaurant;
 
-//    @ManyToMany
-//    private List<Dish> dishes;
+    @ManyToMany
+    @JoinColumn
+    @JsonIgnore
+    private List<Dish> dishes;
 
     public Menu() {
     }
@@ -57,11 +62,11 @@ public class Menu extends NamedEntity {
         this.restaurant = restaurant;
     }
 
-//    public List<Dish> getDishes() {
-//        return dishes;
-//    }
-//
-//    public void setDishes(Collection<Dish> dishes) {
-//        this.dishes = CollectionUtils.isEmpty(dishes) ? Collections.<Dish>emptyList() : List.copyOf(dishes);
-//    }
+    public List<Dish> getDishes() {
+        return dishes;
+    }
+
+    public void setDishes(Collection<Dish> dishes) {
+        this.dishes = CollectionUtils.isEmpty(dishes) ? Collections.<Dish>emptyList() : List.copyOf(dishes);
+    }
 }

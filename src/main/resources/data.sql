@@ -36,19 +36,19 @@ VALUES ('Noma lunch 1', CURRENT_DATE, 1),
        ('Asador lunch 1', CURRENT_DATE, 3),
        ('Asador lunch 2', CURRENT_DATE, 3);
 
--- INSERT INTO menu_dishes (menu_id, dish_id)
--- VALUES (1, 1),  /* Noma lunch 1, Beef Wellington */
---        (1, 2),  /* Noma lunch 1, Onion soup */
---        (2, 1),  /* Noma lunch 2, Beef Wellington */
---        (2, 3),  /* Noma lunch 2, Peking duck */
---        (3, 4),  /* Mirazur lunch 1, Chicken salad */
---        (3, 5),  /* Mirazur lunch 1, Caesar salad */
---        (4, 5),  /* Mirazur lunch 2, Caesar salad */
---        (4, 6),  /* Mirazur lunch 2, Potato frittata */
---        (5, 7),  /* Asador lunch 1, Fish pie */
---        (5, 8),  /* Asador lunch 1, Hummus */
---        (6, 8),  /* Asador lunch 2, Hummus */
---        (6, 9);  /* Asador lunch 2, Chocolate ice cream */
+INSERT INTO menu_dishes (menu_id, dishes_id)
+VALUES (1, 1),  /* Noma lunch 1, Beef Wellington */
+       (1, 2),  /* Noma lunch 1, Onion soup */
+       (2, 1),  /* Noma lunch 2, Beef Wellington */
+       (2, 3),  /* Noma lunch 2, Peking duck */
+       (3, 4),  /* Mirazur lunch 1, Chicken salad */
+       (3, 5),  /* Mirazur lunch 1, Caesar salad */
+       (4, 5),  /* Mirazur lunch 2, Caesar salad */
+       (4, 6),  /* Mirazur lunch 2, Potato frittata */
+       (5, 7),  /* Asador lunch 1, Fish pie */
+       (5, 8),  /* Asador lunch 1, Hummus */
+       (6, 8),  /* Asador lunch 2, Hummus */
+       (6, 9);  /* Asador lunch 2, Chocolate ice cream */
 
 INSERT INTO vote (date, user_id, restaurant_id)
 VALUES ('2020-05-20', 1, 1),

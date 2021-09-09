@@ -26,12 +26,14 @@ public class RegularUserController extends BaseUserController {
 
     @GetMapping
     public User get(@AuthenticationPrincipal AuthUser authUser) {
+        log.info("get auth user {}", authUser.id());
         return authUser.getUser();
     }
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@AuthenticationPrincipal AuthUser authUser) {
+        log.info("delete {}", authUser.id());
         super.delete(authUser.id());
     }
 
@@ -52,6 +54,7 @@ public class RegularUserController extends BaseUserController {
     @Transactional
     //@CacheEvict(allEntries = true)
     public void update(@RequestBody @Valid UserTo userTo, @AuthenticationPrincipal AuthUser authUser) {
+        log.info("update {} with id={}", userTo, authUser.id());
         assureIdConsistent(userTo, authUser.id());
         User user = authUser.getUser();
         prepareAndSave(UserUtil.updateFromTo(user, userTo));

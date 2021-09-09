@@ -48,7 +48,6 @@ public abstract class BaseEntity implements Persistable<Integer>, HasId {
         if (this == o) {
             return true;
         }
-        //if (o == null || !getClass().equals(Hibernate.getClass(o))) {
         if (o == null || !getClass().equals(ProxyUtils.getUserClass(o))) {
             return false;
         }

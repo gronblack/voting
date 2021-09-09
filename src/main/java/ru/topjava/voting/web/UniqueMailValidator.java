@@ -1,4 +1,4 @@
-package ru.topjava.voting.web.user;
+package ru.topjava.voting.web;
 
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
@@ -8,8 +8,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import ru.topjava.voting.model.HasIdAndEmail;
 import ru.topjava.voting.repository.UserRepository;
-import ru.topjava.voting.web.GlobalExceptionHandler;
-import ru.topjava.voting.web.SecurityUtil;
 
 import javax.servlet.http.HttpServletRequest;
 

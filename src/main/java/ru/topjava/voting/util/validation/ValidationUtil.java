@@ -3,10 +3,15 @@ package ru.topjava.voting.util.validation;
 import ru.topjava.voting.error.IllegalRequestDataException;
 import ru.topjava.voting.error.NotFoundException;
 import ru.topjava.voting.model.HasId;
+import ru.topjava.voting.web.GlobalExceptionHandler;
 
+import java.time.Clock;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class ValidationUtil {
+    public static final LocalTime VOTE_TIME_BORDER = LocalTime.of(11, 0);
+
     public static void checkNew(HasId bean) {
         if (!bean.isNew()) {
             throw new IllegalRequestDataException(bean.getClass().getSimpleName() + " must be new (id=null)");
@@ -31,6 +36,12 @@ public class ValidationUtil {
     public static void checkDate(LocalDate expected, LocalDate actual) {
         if (!expected.isEqual(actual)) {
             throw new IllegalRequestDataException("Expected date " + expected + " but was " + actual);
+        }
+    }
+
+    public static void checkTime(Clock clock) {
+        if (!LocalTime.now(clock).isBefore(VOTE_TIME_BORDER)) {
+            throw new IllegalRequestDataException(GlobalExceptionHandler.EXCEPTION_TOO_LATE_FOR_VOTING + " before " + VOTE_TIME_BORDER);
         }
     }
 }

@@ -1,4 +1,4 @@
-package ru.topjava.voting.web.restaurant;
+package ru.topjava.voting.web.controller.restaurant;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
@@ -14,7 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = RegularRestaurantController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class RegularRestaurantController extends BaseRestaurantController {
-    static final String REST_URL = "/api/restaurants";
+    public static final String REST_URL = "/api/restaurants";
 
     @GetMapping
     //@Cacheable -upd

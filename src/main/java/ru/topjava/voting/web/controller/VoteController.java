@@ -1,4 +1,4 @@
-package ru.topjava.voting.web;
+package ru.topjava.voting.web.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +13,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.topjava.voting.model.Vote;
 import ru.topjava.voting.repository.VoteRepository;
 import ru.topjava.voting.service.VoteService;
+import ru.topjava.voting.web.AuthUser;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -26,7 +27,7 @@ import static ru.topjava.voting.util.validation.ValidationUtil.*;
 @RequestMapping(value = VoteController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class VoteController {
     protected final Logger log = LoggerFactory.getLogger(getClass());
-    static final String REST_URL = "/api/votes";
+    public static final String REST_URL = "/api/votes";
 
     private final VoteRepository repository;
     private final VoteService service;
@@ -64,7 +65,7 @@ public class VoteController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@AuthenticationPrincipal AuthUser authUser, @PathVariable int id) {
         log.info("delete {} for user {}", id, authUser.id());
-        service.checkTime();
+        checkTime(getClock());
         Vote vote = service.checkBelong(id, authUser.id());
         checkDate(LocalDate.now(getClock()), vote.getDate());
         repository.delete(vote);
@@ -73,7 +74,7 @@ public class VoteController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Vote> createWithLocation(@AuthenticationPrincipal AuthUser authUser, @Valid @RequestBody Vote vote) {
         log.info("create {}", vote);
-        service.checkTime();
+        checkTime(getClock());
         checkNew(vote);
         Vote created = service.save(vote, authUser.id());
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
@@ -87,7 +88,7 @@ public class VoteController {
     public void update(@AuthenticationPrincipal AuthUser authUser, @Valid @RequestBody Vote vote, @PathVariable int id) {
         int userId = authUser.id();
         log.info("update {} for user {}", vote, userId);
-        service.checkTime();
+        checkTime(getClock());
         checkDate(LocalDate.now(getClock()), vote.getDate());
         assureIdConsistent(vote, id);
         service.checkBelong(id, userId);

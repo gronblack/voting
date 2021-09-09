@@ -1,4 +1,4 @@
-package ru.topjava.voting.web.user;
+package ru.topjava.voting.web.controller.user;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import ru.topjava.voting.model.User;
 import ru.topjava.voting.repository.UserRepository;
 import ru.topjava.voting.util.UserUtil;
+import ru.topjava.voting.web.UniqueMailValidator;
 
 public abstract class BaseUserController {
     protected final Logger log = LoggerFactory.getLogger(getClass());

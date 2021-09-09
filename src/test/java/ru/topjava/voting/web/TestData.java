@@ -13,8 +13,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import static ru.topjava.voting.service.VoteService.VOTE_TIME_BORDER;
-import static ru.topjava.voting.web.TestData.ForRestaurant.restaurantMirazur;
+import static ru.topjava.voting.util.validation.ValidationUtil.VOTE_TIME_BORDER;
 
 public class TestData {
     public static final int EXIST_ID = 1;

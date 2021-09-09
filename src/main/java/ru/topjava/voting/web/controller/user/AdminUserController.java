@@ -1,4 +1,4 @@
-package ru.topjava.voting.web.user;
+package ru.topjava.voting.web.controller.user;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -19,7 +19,7 @@ import static ru.topjava.voting.util.validation.ValidationUtil.checkNew;
 @RestController
 @RequestMapping(value = AdminUserController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class AdminUserController extends BaseUserController {
-    static final String REST_URL = "/api/admin/users";
+    public static final String REST_URL = "/api/admin/users";
 
     @GetMapping
     //@Cacheable -upd

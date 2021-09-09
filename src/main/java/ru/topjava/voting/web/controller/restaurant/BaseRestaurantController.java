@@ -1,4 +1,4 @@
-package ru.topjava.voting.web.restaurant;
+package ru.topjava.voting.web.controller.restaurant;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

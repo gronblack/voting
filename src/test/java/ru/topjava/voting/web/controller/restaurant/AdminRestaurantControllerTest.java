@@ -1,4 +1,4 @@
-package ru.topjava.voting.web.restaurant;
+package ru.topjava.voting.web.controller.restaurant;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

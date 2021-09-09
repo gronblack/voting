@@ -5,14 +5,11 @@ import ru.topjava.voting.error.IllegalRequestDataException;
 import ru.topjava.voting.model.Vote;
 import ru.topjava.voting.repository.UserRepository;
 import ru.topjava.voting.repository.VoteRepository;
-import ru.topjava.voting.web.GlobalExceptionHandler;
 
 import java.time.Clock;
-import java.time.LocalTime;
 
 @Service
 public class VoteService {
-    public static final LocalTime VOTE_TIME_BORDER = LocalTime.of(11, 0);
     private static Clock clock;   // https://stackoverflow.com/a/45833128
 
     private final VoteRepository voteRepository;
@@ -44,11 +41,5 @@ public class VoteService {
 
     public static void resetClock() {
         setClock(Clock.systemDefaultZone());
-    }
-
-    public void checkTime() {
-        if (!LocalTime.now(clock).isBefore(VOTE_TIME_BORDER)) {
-            throw new IllegalRequestDataException(GlobalExceptionHandler.EXCEPTION_TOO_LATE_FOR_VOTING + " before " + VOTE_TIME_BORDER);
-        }
     }
 }

@@ -14,6 +14,7 @@ import ru.topjava.voting.model.Vote;
 import ru.topjava.voting.repository.VoteRepository;
 import ru.topjava.voting.service.VoteService;
 import ru.topjava.voting.util.JsonUtil;
+import ru.topjava.voting.web.controller.VoteController;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertFalse;

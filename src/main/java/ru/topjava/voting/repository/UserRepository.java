@@ -10,8 +10,4 @@ import java.util.Optional;
 public interface UserRepository extends BaseRepository<User> {
     @Query("SELECT u FROM User u WHERE u.email = LOWER(:email)")
     Optional<User> getByEmail(String email);
-
-//    @EntityGraph(attributePaths = {"votes"}, type = EntityGraph.EntityGraphType.LOAD) -upd
-//    @Query("SELECT u FROM User u WHERE u.id=?1")
-//    Optional<User> getWithVotes(int id);
 }

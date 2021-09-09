@@ -1,4 +1,4 @@
-package ru.topjava.voting.web.user;
+package ru.topjava.voting.web.controller.user;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,7 +22,7 @@ import static ru.topjava.voting.util.validation.ValidationUtil.checkNew;
 @RequestMapping(value = RegularUserController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 //@CacheConfig(cacheNames = "users")
 public class RegularUserController extends BaseUserController {
-    static final String REST_URL = "/api/account";
+    public static final String REST_URL = "/api/account";
 
     @GetMapping
     public User get(@AuthenticationPrincipal AuthUser authUser) {

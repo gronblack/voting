@@ -36,7 +36,7 @@ VALUES ('Noma lunch 1', CURRENT_DATE, 1),
        ('Asador lunch 1', CURRENT_DATE, 3),
        ('Asador lunch 2', CURRENT_DATE, 3);
 
-INSERT INTO menu_dishes (menu_id, dishes_id)
+INSERT INTO menu_dish (menu_id, dish_id)
 VALUES (1, 1),  /* Noma lunch 1, Beef Wellington */
        (1, 2),  /* Noma lunch 1, Onion soup */
        (2, 1),  /* Noma lunch 2, Beef Wellington */

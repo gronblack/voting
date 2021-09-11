@@ -15,6 +15,7 @@ import ru.topjava.voting.repository.VoteRepository;
 import ru.topjava.voting.service.VoteService;
 import ru.topjava.voting.util.JsonUtil;
 import ru.topjava.voting.web.controller.VoteController;
+import ru.topjava.voting.web.testdata.VoteTD;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -22,11 +23,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static ru.topjava.voting.web.TestData.ForRestaurant.restaurantMirazur;
-import static ru.topjava.voting.web.TestData.ForRestaurant.restaurantNoma;
-import static ru.topjava.voting.web.TestData.ForUser.*;
-import static ru.topjava.voting.web.TestData.ForVote.*;
-import static ru.topjava.voting.web.TestData.NOT_FOUND_ID;
+import static ru.topjava.voting.web.testdata.CommonTD.NOT_FOUND_ID;
+import static ru.topjava.voting.web.testdata.RestaurantTD.restaurantMirazur;
+import static ru.topjava.voting.web.testdata.RestaurantTD.restaurantNoma;
+import static ru.topjava.voting.web.testdata.UserTD.*;
+import static ru.topjava.voting.web.testdata.VoteTD.*;
 
 class VoteControllerTest extends BaseControllerTest {
     private static final String REST_URL = VoteController.REST_URL + '/';
@@ -161,7 +162,7 @@ class VoteControllerTest extends BaseControllerTest {
         @WithUserDetails(value = ADMIN_MAIL)
         void createWithLocation() throws Exception {
             VoteService.setClock(voteBorderClock(true));
-            Vote nv = getNewVote(admin, restaurantMirazur);
+            Vote nv = VoteTD.getNewVote(admin, restaurantMirazur);
             ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(JsonUtil.writeValue(nv)))

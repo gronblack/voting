@@ -1,16 +1,18 @@
 package ru.topjava.voting.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "restaurant")
 public class Restaurant extends NamedEntity {
-    @OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "restaurant")
     //@OrderBy("date DESC")
     //@JsonManagedReference
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -18,11 +20,10 @@ public class Restaurant extends NamedEntity {
     private List<Menu> menus;
 
     @OneToMany(mappedBy = "restaurant")
-    //@OrderBy("name DESC")
-    //@JsonManagedReference
+    @OrderBy("name DESC")
+    @JsonManagedReference
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
-    private List<Dish> dishes;
+    private Set<Dish> dishes;
 
     @OneToMany(mappedBy = "restaurant")
     //@OrderBy("date DESC")
@@ -35,10 +36,15 @@ public class Restaurant extends NamedEntity {
     }
 
     public Restaurant(Integer id, String name) {
-        super(id, name);
+        this(id, name, null);
     }
 
-//    public List<Menu> getMenus() {
+    public Restaurant(Integer id, String name, Set<Dish> dishes) {
+        super(id, name);
+        this.dishes = dishes;
+    }
+
+    //    public List<Menu> getMenus() {
 //        return menus;
 //    }
 //
@@ -46,12 +52,22 @@ public class Restaurant extends NamedEntity {
 //        this.menus = menus;
 //    }
 //
-//    public List<Dish> getDishes() {
-//        return dishes;
+    public Set<Dish> getDishes() {
+        return dishes;
+    }
+
+    public void setDishes(Set<Dish> dishes) {
+        this.dishes = dishes;
+    }
+//
+//    public void addDish(Dish dish) {
+//        dishes.add(dish);
+//        dish.setRestaurant(this);
 //    }
 //
-//    public void setDishes(List<Dish> dishes) {
-//        this.dishes = dishes;
+//    public void removeDish(Dish dish) {
+//        dishes.remove(dish);
+//        dish.setRestaurant(null);
 //    }
 //
 //    public List<Vote> getVotes() {

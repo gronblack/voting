@@ -19,8 +19,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static ru.topjava.voting.web.TestData.ForUser.*;
-import static ru.topjava.voting.web.TestData.NOT_FOUND_ID;
+import static ru.topjava.voting.web.testdata.CommonTD.NOT_FOUND_ID;
+import static ru.topjava.voting.web.testdata.UserTD.*;
 
 public class AdminUserControllerTest extends BaseControllerTest {
     private static final String REST_URL = AdminUserController.REST_URL + '/';

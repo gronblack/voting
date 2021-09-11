@@ -1,30 +1,36 @@
-package ru.topjava.voting.web.controller.restaurant;
+package ru.topjava.voting.web.controller.dish;
 
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import ru.topjava.voting.model.Restaurant;
-import ru.topjava.voting.repository.RestaurantRepository;
+import ru.topjava.voting.model.Dish;
+import ru.topjava.voting.repository.DishRepository;
+import ru.topjava.voting.to.DishTo;
 import ru.topjava.voting.util.JsonUtil;
 import ru.topjava.voting.web.BaseControllerTest;
+import ru.topjava.voting.web.controller.AdminDishController;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static ru.topjava.voting.web.testdata.CommonTD.EXIST_ID;
 import static ru.topjava.voting.web.testdata.CommonTD.NOT_FOUND_ID;
-import static ru.topjava.voting.web.testdata.RestaurantTD.RESTAURANT_MATCHER;
+import static ru.topjava.voting.web.testdata.DishTD.*;
+import static ru.topjava.voting.web.testdata.RestaurantTD.RESTAURANT_NOMA_ID;
+import static ru.topjava.voting.web.testdata.RestaurantTD.restaurantNoma;
 import static ru.topjava.voting.web.testdata.UserTD.ADMIN_MAIL;
 import static ru.topjava.voting.web.testdata.UserTD.USER_MAIL;
 
-class AdminRestaurantControllerTest extends BaseControllerTest {
-    static final String REST_URL = AdminRestaurantController.REST_URL + '/';
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+class AdminDishControllerTest extends BaseControllerTest {
+    public static final String REST_URL = AdminDishController.REST_URL + "/";
 
     @Autowired
-    protected RestaurantRepository repository;
+    private DishRepository repository;
 
     @Test
     @WithUserDetails(value = USER_MAIL)
@@ -36,22 +42,24 @@ class AdminRestaurantControllerTest extends BaseControllerTest {
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void createWithLocation() throws Exception {
-        Restaurant nr = new Restaurant(null, "Test Restaurant");
+        DishTo newTo = new DishTo("New Dish", 52.5, RESTAURANT_NOMA_ID);
+        Dish newDish = new Dish(newTo.getId(), newTo.getName(), newTo.getPrice(), restaurantNoma);
+
         ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.writeValue(nr)))
+                .content(JsonUtil.writeValue(newTo)))
                 .andExpect(status().isCreated());
-        Restaurant created = RESTAURANT_MATCHER.readFromJson(action);
+        Dish created = DISH_MATCHER.readFromJson(action);
         int newId = created.id();
-        nr.setId(newId);
-        RESTAURANT_MATCHER.assertMatch(created, nr);
-        RESTAURANT_MATCHER.assertMatch(repository.getById(newId), nr);
+        newDish.setId(newId);
+        DISH_MATCHER.assertMatch(created, newDish);
+        DISH_MATCHER.assertMatch(repository.getById(newId), newDish);
     }
 
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void createInvalid() throws Exception {
-        Restaurant invalid = new Restaurant(null, null);
+        DishTo invalid = new DishTo(null, null, 0, 0);
         perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(invalid)))
@@ -62,20 +70,26 @@ class AdminRestaurantControllerTest extends BaseControllerTest {
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void update() throws Exception {
-        Restaurant updated = new Restaurant(EXIST_ID, "Updatable Restaurant");
-        perform(MockMvcRequestBuilders.put(REST_URL + EXIST_ID)
+        DishTo to = fromDish(dish1);
+        to.setName("Updated");
+        Dish dish = new Dish(dish1);
+        dish.setName("Updated");
+
+        perform(MockMvcRequestBuilders.put(REST_URL + DISH_1_ID)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.writeValue(updated)))
+                .content(JsonUtil.writeValue(to)))
                 .andDo(print())
                 .andExpect(status().isNoContent());
-        RESTAURANT_MATCHER.assertMatch(repository.getById(EXIST_ID), updated);
+        DISH_MATCHER.assertMatch(repository.getById(DISH_1_ID), dish);
     }
 
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void updateInvalid() throws Exception {
-        Restaurant invalid = new Restaurant(EXIST_ID, "");
-        perform(MockMvcRequestBuilders.put(REST_URL + EXIST_ID)
+        DishTo invalid = fromDish(dish1);
+        invalid.setName("");
+
+        perform(MockMvcRequestBuilders.put(REST_URL + DISH_1_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(invalid)))
                 .andDo(print())
@@ -85,9 +99,10 @@ class AdminRestaurantControllerTest extends BaseControllerTest {
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void updateHtmlUnsafe() throws Exception {
-        Restaurant updated = new Restaurant(EXIST_ID, "Updatable Restaurant");
+        DishTo updated = fromDish(dish1);
         updated.setName("<script>alert(123)</script>");
-        perform(MockMvcRequestBuilders.put(REST_URL + EXIST_ID)
+
+        perform(MockMvcRequestBuilders.put(REST_URL + DISH_1_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(updated)))
                 .andDo(print())
@@ -97,10 +112,10 @@ class AdminRestaurantControllerTest extends BaseControllerTest {
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void delete() throws Exception {
-        perform(MockMvcRequestBuilders.delete(REST_URL + EXIST_ID))
+        perform(MockMvcRequestBuilders.delete(REST_URL + DISH_9_ID))
                 .andDo(print())
                 .andExpect(status().isNoContent());
-        assertFalse(repository.findById(EXIST_ID).isPresent());
+        assertFalse(repository.findById(DISH_9_ID).isPresent());
     }
 
     @Test

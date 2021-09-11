@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.topjava.voting.model.User;
+import ru.topjava.voting.util.UserUtil;
 
 import javax.validation.Valid;
 import java.net.URI;

@@ -17,14 +17,12 @@ public class RegularRestaurantController extends BaseRestaurantController {
     public static final String REST_URL = "/api/restaurants";
 
     @GetMapping
-    //@Cacheable -upd
     public List<Restaurant> getAll() {
         log.info("getAll");
         return repository.findAll(Sort.by(Sort.Direction.ASC, "name"));
     }
 
     @GetMapping("/with-dishes")
-    //@Cacheable -upd
     public List<Restaurant> getAllWithDishes() {
         log.info("getAllWithDishes");
         return repository.getAllWithDishes();
@@ -41,14 +39,4 @@ public class RegularRestaurantController extends BaseRestaurantController {
         log.info("getWithDishes {}", id);
         return ResponseEntity.of(repository.getWithDishes(id));
     }
-
-//    @GetMapping("/with-rating")
-//    public List<RestaurantTo> getAllWithRating() {
-//        return super.getAllWithRating();
-//    }
-//
-//    @GetMapping("/{id}/with-rating")
-//    public ResponseEntity<RestaurantTo> getWithRating(@PathVariable int id) {
-//        return super.getWithRating(id);
-//    }
 }

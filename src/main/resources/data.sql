@@ -1,7 +1,7 @@
 INSERT INTO users (email, name, password, registered)
-VALUES ('user@gmail.com', 'User', '{noop}password', DATEADD('DAY', -10, CURDATE())),
-       ('admin@voting.ru', 'Admin', '{noop}admin', DATEADD('DAY', -15, CURDATE())),
-       ('user2@gmail.com', 'User2', '{noop}password2', DATEADD('DAY', -10, CURDATE()));
+VALUES ('user@gmail.com', 'User', '{noop}password', DATEADD('DAY', -10, CURRENT_DATE)),
+       ('admin@voting.ru', 'Admin', '{noop}admin', DATEADD('DAY', -15, CURRENT_DATE)),
+       ('user2@gmail.com', 'User2', '{noop}password2', DATEADD('DAY', -10, CURRENT_DATE));
 
 INSERT INTO user_role (role, user_id)
 VALUES ('USER', 1),
@@ -9,10 +9,6 @@ VALUES ('USER', 1),
        ('USER', 2),
        ('USER', 3);
 
--- INSERT INTO restaurant (name, rating)
--- VALUES ('Noma', 0),
---        ('Mirazur', 0),
---        ('Asador', 0);
 INSERT INTO restaurant (name)
 VALUES ('Noma'),
        ('Mirazur'),
@@ -31,11 +27,11 @@ VALUES ('Beef Wellington', 150.25, 1),
        ('Chocolate ice cream', 50, 3);
 
 INSERT INTO menu (name, date, restaurant_id)
-VALUES ('Noma lunch 1', CURRENT_DATE, 1),
+VALUES ('Noma lunch 1', DATEADD('DAY', -1, CURRENT_DATE), 1),
        ('Noma lunch 2', CURRENT_DATE, 1),
-       ('Mirazur lunch 1', CURRENT_DATE, 2),
+       ('Mirazur lunch 1', DATEADD('DAY', -1, CURRENT_DATE), 2),
        ('Mirazur lunch 2', CURRENT_DATE, 2),
-       ('Asador lunch 1', CURRENT_DATE, 3),
+       ('Asador lunch 1', DATEADD('DAY', -1, CURRENT_DATE), 3),
        ('Asador lunch 2', CURRENT_DATE, 3);
 
 INSERT INTO menu_dish (menu_id, dish_id)
@@ -58,9 +54,9 @@ VALUES ('2020-05-20', 1, 1),
        ('2020-05-20', 3, 3),
        ('2020-05-21', 1, 1),
        ('2020-05-21', 2, 1),
-       (CURDATE(), 1, 2),
-       (CURDATE(), 2, 2),
-       (DATEADD('DAY', -1, CURDATE()), 1, 3),
-       (DATEADD('DAY', -1, CURDATE()), 2, 1),
-       (DATEADD('DAY', -2, CURDATE()), 1, 1),
-       (DATEADD('DAY', -2, CURDATE()), 2, 2);
+       (CURRENT_DATE, 1, 2),
+       (CURRENT_DATE, 2, 2),
+       (DATEADD('DAY', -1, CURRENT_DATE), 1, 3),
+       (DATEADD('DAY', -1, CURRENT_DATE), 2, 1),
+       (DATEADD('DAY', -2, CURRENT_DATE), 1, 1),
+       (DATEADD('DAY', -2, CURRENT_DATE), 2, 2);

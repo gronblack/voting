@@ -13,13 +13,11 @@ public class Vote extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
-    //@JsonBackReference
     @NotNull
     private User user;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "restaurant_id", nullable = false)
-    //@JsonBackReference
     @NotNull
     private Restaurant restaurant;
 

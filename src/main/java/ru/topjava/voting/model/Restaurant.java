@@ -13,10 +13,8 @@ import java.util.Set;
 @Table(name = "restaurant")
 public class Restaurant extends NamedEntity {
     @OneToMany(mappedBy = "restaurant")
-    //@OrderBy("date DESC")
-    //@JsonManagedReference
+    @OrderBy("date DESC")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
     private List<Menu> menus;
 
     @OneToMany(mappedBy = "restaurant")
@@ -26,8 +24,6 @@ public class Restaurant extends NamedEntity {
     private Set<Dish> dishes;
 
     @OneToMany(mappedBy = "restaurant")
-    //@OrderBy("date DESC")
-    //@JsonManagedReference
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private List<Vote> votes;
@@ -44,14 +40,6 @@ public class Restaurant extends NamedEntity {
         this.dishes = dishes;
     }
 
-    //    public List<Menu> getMenus() {
-//        return menus;
-//    }
-//
-//    public void setMenus(List<Menu> menus) {
-//        this.menus = menus;
-//    }
-//
     public Set<Dish> getDishes() {
         return dishes;
     }

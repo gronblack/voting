@@ -49,8 +49,6 @@ public class User extends NamedEntity implements HasIdAndEmail {
     private Set<Role> roles;
 
     @OneToMany(mappedBy = "user")
-    //@OrderBy("date DESC")
-    //@JsonManagedReference
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private List<Vote> votes;
@@ -115,14 +113,6 @@ public class User extends NamedEntity implements HasIdAndEmail {
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
-
-//    public List<Vote> getVotes() {
-//        return votes;
-//    }
-//
-//    public void setVotes(List<Vote> votes) {
-//        this.votes = votes;
-//    }
 
     @Override
     public String toString() {

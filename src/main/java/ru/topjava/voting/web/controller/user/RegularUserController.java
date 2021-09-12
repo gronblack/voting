@@ -20,7 +20,6 @@ import static ru.topjava.voting.util.validation.ValidationUtil.checkNew;
 
 @RestController
 @RequestMapping(value = RegularUserController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-//@CacheConfig(cacheNames = "users")
 public class RegularUserController extends BaseUserController {
     public static final String REST_URL = "/api/account";
 
@@ -39,7 +38,6 @@ public class RegularUserController extends BaseUserController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    //@CacheEvict(allEntries = true)
     public ResponseEntity<User> register(@Valid @RequestBody UserTo userTo) {
         log.info("register {}", userTo);
         checkNew(userTo);
@@ -52,7 +50,6 @@ public class RegularUserController extends BaseUserController {
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Transactional
-    //@CacheEvict(allEntries = true)
     public void update(@RequestBody @Valid UserTo userTo, @AuthenticationPrincipal AuthUser authUser) {
         log.info("update {} with id={}", userTo, authUser.id());
         assureIdConsistent(userTo, authUser.id());

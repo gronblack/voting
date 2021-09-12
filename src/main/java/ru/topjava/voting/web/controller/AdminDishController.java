@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.topjava.voting.model.Dish;
-import ru.topjava.voting.repository.DishRepository;
 import ru.topjava.voting.service.DishService;
 import ru.topjava.voting.to.DishTo;
 
@@ -24,11 +23,9 @@ public class AdminDishController {
     public static final String REST_URL = "/api/admin/dishes";
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
-    private final DishRepository repository;
     private final DishService service;
 
-    public AdminDishController(DishRepository repository, DishService service) {
-        this.repository = repository;
+    public AdminDishController(DishService service) {
         this.service = service;
     }
 

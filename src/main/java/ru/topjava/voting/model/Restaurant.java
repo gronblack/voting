@@ -59,22 +59,4 @@ public class Restaurant extends NamedEntity {
     public void setDishes(Set<Dish> dishes) {
         this.dishes = dishes;
     }
-//
-//    public void addDish(Dish dish) {
-//        dishes.add(dish);
-//        dish.setRestaurant(this);
-//    }
-//
-//    public void removeDish(Dish dish) {
-//        dishes.remove(dish);
-//        dish.setRestaurant(null);
-//    }
-//
-//    public List<Vote> getVotes() {
-//        return votes;
-//    }
-//
-//    public void setVotes(List<Vote> votes) {
-//        this.votes = votes;
-//    }
 }

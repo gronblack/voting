@@ -59,9 +59,4 @@ public class RegularUserController extends BaseUserController {
         User user = authUser.getUser();
         prepareAndSave(UserUtil.updateFromTo(user, userTo));
     }
-
-//    @GetMapping("/with-votes")
-//    public ResponseEntity<User> getWithVotes(@AuthenticationPrincipal AuthUser authUser) {
-//        return super.getWithVotes(authUser.id());
-//    }
 }

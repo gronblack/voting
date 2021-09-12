@@ -61,7 +61,7 @@ public class AdminUserControllerTest extends BaseControllerTest {
         perform(MockMvcRequestBuilders.get(REST_URL))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(USER_MATCHER.contentJson(admin, user));
+                .andExpect(USER_MATCHER.contentJson(admin, user, user2));
     }
 
     @Test

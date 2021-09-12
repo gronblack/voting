@@ -1,15 +1,12 @@
 package ru.topjava.voting.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.Positive;
 
 @Entity
-@Table(name = "dish", uniqueConstraints = {@UniqueConstraint(columnNames = {"id", "restaurant_id"}, name = "dish_restaurant_idx"),
-        //@UniqueConstraint(columnNames = {"id", "menu_id"}, name = "dish_menu_idx")
-        })
+@Table(name = "dish", uniqueConstraints = {@UniqueConstraint(columnNames = {"id", "restaurant_id"}, name = "dish_restaurant_idx")})
 public class Dish extends NamedEntity {
     @Column(name = "price", nullable = false)
     @Positive
@@ -20,11 +17,6 @@ public class Dish extends NamedEntity {
     @JsonBackReference
     private Restaurant restaurant;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "menu_id")
-//    @JsonIgnore
-//    private Menu menu;
-
     public Dish() {
     }
 
@@ -32,23 +24,11 @@ public class Dish extends NamedEntity {
         this(d.id(), d.getName(), d.getPrice(), d.getRestaurant());
     }
 
-    public Dish(String name, double price) {
-        this(null, name, price, null);
-    }
-
     public Dish(Integer id, String name, double price, Restaurant restaurant) {
         super(id, name);
         this.price = price;
         this.restaurant = restaurant;
     }
-
-//    public Menu getMenu() {
-//        return menu;
-//    }
-//
-//    public void setMenu(Menu menu) {
-//        this.menu = menu;
-//    }
 
     public double getPrice() {
         return price;

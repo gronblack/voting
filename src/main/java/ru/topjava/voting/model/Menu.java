@@ -22,7 +22,7 @@ public class Menu extends NamedEntity {
     //@JsonBackReference
     private Restaurant restaurant;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "menu_dish",
             joinColumns = @JoinColumn(name = "menu_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "dish_id", referencedColumnName = "id")

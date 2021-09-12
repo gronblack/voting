@@ -11,11 +11,6 @@ public abstract class BaseRestaurantController {
     @Autowired
     protected RestaurantRepository repository;
 
-//    protected ResponseEntity<Restaurant> getWithVotes(int id) {
-//        log.info("getWithVotes {}", id);
-//        return ResponseEntity.of(repository.getWithVotes(id));
-//    }
-//
 //    protected ResponseEntity<RestaurantTo> getWithRating(int id) {
 //        log.info("getWithRating {}", id);
 //        return ResponseEntity.of(repository.getWithRating(id));

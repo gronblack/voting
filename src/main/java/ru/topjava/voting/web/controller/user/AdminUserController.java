@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.topjava.voting.model.User;
-import ru.topjava.voting.util.UserUtil;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -40,11 +39,6 @@ public class AdminUserController extends BaseUserController {
         log.info("getByEmail {}", email);
         return ResponseEntity.of(repository.getByEmail(email));
     }
-
-//    @GetMapping("/{id}/with-votes")
-//    public ResponseEntity<User> getWithVotes(@PathVariable int id) {
-//        return super.getWithVotes(id);
-//    }
 
     @Override
     @DeleteMapping("/{id}")

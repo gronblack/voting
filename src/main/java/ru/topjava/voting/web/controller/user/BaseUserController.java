@@ -30,11 +30,6 @@ public abstract class BaseUserController {
         repository.deleteExisted(id);
     }
 
-//    protected ResponseEntity<User> getWithVotes(int id) {
-//        log.info("getWithVotes {}", id);
-//        return ResponseEntity.of(repository.getWithVotes(id));
-//    }
-
     protected User prepareAndSave(User user) {
         return repository.save(UserUtil.prepareToSave(user));
     }

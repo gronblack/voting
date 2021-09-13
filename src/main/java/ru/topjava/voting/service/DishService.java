@@ -24,8 +24,13 @@ public class DishService {
         this.menuRepo = menuRepository;
     }
 
+    public Dish get(int id) {
+        return dishRepo.findById(id).orElseThrow();
+    }
+
     public Dish saveFromTo(DishTo to) {
-        return dishRepo.save( new Dish(to.getId(), to.getName(), to.getPrice(), restRepo.getById(to.getRestaurant_id())) );
+        Dish dish = new Dish(to.getId(), to.getName(), to.getPrice(), restRepo.findById(to.getRestaurant_id()).orElseThrow());
+        return dishRepo.save(dish);
     }
 
     public void removeAllDishesFromMenu(int restaurantId) {

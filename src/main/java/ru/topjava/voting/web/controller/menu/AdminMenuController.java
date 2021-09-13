@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.topjava.voting.model.Dish;
 import ru.topjava.voting.model.Menu;
+import ru.topjava.voting.to.DishTo;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -21,10 +22,10 @@ public class AdminMenuController extends BaseMenuController {
     public static final String REST_URL = "/api/admin/menu";
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Menu> createWithLocation(@Valid @RequestBody Menu menu) {
+    public ResponseEntity<Menu> createWithLocation(@Valid @RequestBody Menu menu, @RequestParam int restaurant) {
         log.info("create {}", menu);
         checkNew(menu);
-        Menu created = repository.save(menu);
+        Menu created = menuRepo.save(prepareToSave(menu, restaurant));
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(created.getId()).toUri();
@@ -33,32 +34,45 @@ public class AdminMenuController extends BaseMenuController {
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@Valid @RequestBody Menu menu, @PathVariable int id) {
+    public void update(@Valid @RequestBody Menu menu, @PathVariable int id, @RequestParam int restaurant) {
         log.info("update {}", menu);
         assureIdConsistent(menu, id);
-        repository.save(menu);
+        prepareToSave(menu, restaurant);
+        menuRepo.save(menu);
     }
 
     @PatchMapping("/{id}/add-dish")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Transactional
-    public void addDish(@RequestBody Dish dish, @PathVariable int id) {
-        log.info("addDish to menu {}", id);
-        repository.get(id).orElseThrow().addDishes(dish);
+    public void addNewDish(@Valid @RequestBody DishTo to, @PathVariable int id) {
+        log.info("addNewDish to menu {}", id);
+        checkNew(to);
+        Menu menu = menuRepo.get(id).orElseThrow();
+        menu.addDishes(dishService.saveFromTo(to));
     }
 
-    @PatchMapping("/{id}/remove-dish")
+    @PatchMapping("/{id}/add-dish/{dishId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Transactional
-    public void removeDish(@RequestBody Dish dish, @PathVariable int id) {
+    public void addExistingDish(@PathVariable int id, @PathVariable int dishId) {
+        log.info("addExistingDish {} to menu {}", dishId, id);
+        Dish existing = dishService.get(dishId);
+        menuRepo.get(id).orElseThrow().addDishes(existing);
+    }
+
+    @PatchMapping("/{id}/remove-dish/{dishId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Transactional
+    public void removeDish(@PathVariable int id, @PathVariable int dishId) {
         log.info("removeDish from menu {}", id);
-        repository.get(id).orElseThrow().removeDishes(dish);
+        Menu menu = menuRepo.get(id).orElseThrow();
+        menu.removeDishes(dishService.get(dishId));
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
         log.info("delete {}", id);
-        repository.deleteExisted(id);
+        menuRepo.deleteExisted(id);
     }
 }

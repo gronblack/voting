@@ -3,7 +3,6 @@ package ru.topjava.voting.model;
 import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
@@ -14,7 +13,6 @@ import java.util.Set;
 @Table(name = "menu", uniqueConstraints = {@UniqueConstraint(columnNames = {"id", "restaurant_id"}, name = "menu_restaurant_idx")})
 public class Menu extends NamedEntity {
     @Column(name = "registered", nullable = false)
-    @NotNull
     private LocalDate registered;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -1,6 +1,7 @@
 package ru.topjava.voting.to;
 
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import java.io.Serial;
 import java.io.Serializable;
 
@@ -11,8 +12,8 @@ public class DishTo extends NamedTo implements Serializable {
     @Positive
     private double price;
 
-    @Positive
-    private int restaurant_id;
+    @PositiveOrZero
+    private Integer restaurant_id;
 
     public DishTo() {
     }

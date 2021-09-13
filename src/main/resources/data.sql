@@ -26,7 +26,7 @@ VALUES ('Beef Wellington', 150.25, 1),
        ('Hummus', 80, 3),
        ('Chocolate ice cream', 50, 3);
 
-INSERT INTO menu (name, date, restaurant_id)
+INSERT INTO menu (name, registered, restaurant_id)
 VALUES ('Noma lunch 1', DATEADD('DAY', -1, CURRENT_DATE), 1),
        ('Noma lunch 2', CURRENT_DATE, 1),
        ('Mirazur lunch 1', DATEADD('DAY', -1, CURRENT_DATE), 2),

@@ -48,7 +48,7 @@ public class AdminRestaurantController extends BaseRestaurantController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
         log.info("delete {}", id);
-        dishService.removeAllDishesFromMenus(id);
+        dishService.removeAllDishesFromMenu(id);
         repository.deleteExisted(id);
     }
 }

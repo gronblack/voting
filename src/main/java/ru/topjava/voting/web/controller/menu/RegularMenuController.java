@@ -18,9 +18,9 @@ public class RegularMenuController extends BaseMenuController {
     public static final String REST_URL = "/api/menu";
 
     @GetMapping
-    public List<Menu> getAllWithRestaurant(@RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-                                           @RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
-        log.info("getAll");
+    public List<Menu> getAllWithRestaurantBetween(@RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+                                                  @RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+        log.info("getAllWithRestaurantBetween {} and {}", startDate, endDate);
         if (startDate == null & endDate == null) {
             startDate = LocalDate.now(getClock());
             endDate = LocalDate.now(getClock());

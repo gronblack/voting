@@ -7,7 +7,7 @@ import java.util.Set;
 
 public class RestaurantTD {
     public static final MatcherFactory.Matcher<Restaurant> RESTAURANT_MATCHER =
-            MatcherFactory.usingIgnoringFieldsComparator(Restaurant.class, "menus", "votes", "dishes");
+            MatcherFactory.usingIgnoringFieldsComparator(Restaurant.class, "menu", "votes", "dishes");
     public static final int RESTAURANT_NOMA_ID = 1;
     public static final Restaurant restaurantNoma = new Restaurant(1, "Noma");
     public static final Restaurant restaurantMirazur = new Restaurant(2, "Mirazur");

@@ -28,12 +28,12 @@ public class DishService {
         return dishRepo.save( new Dish(to.getId(), to.getName(), to.getPrice(), restRepo.getById(to.getRestaurant_id())) );
     }
 
-    public void removeAllDishesFromMenus(int restaurantId) {
+    public void removeAllDishesFromMenu(int restaurantId) {
         // https://www.baeldung.com/convert-array-to-list-and-list-to-array#1-using-plain-java
-        removeFromMenus(restaurantId, dishRepo.getAllByRestaurantId(restaurantId).toArray(new Dish[0]));
+        removeFromMenu(restaurantId, dishRepo.getAllByRestaurantId(restaurantId).toArray(new Dish[0]));
     }
 
-    public void removeFromMenus(int restaurantId, Dish... dishes) {
+    public void removeFromMenu(int restaurantId, Dish... dishes) {
         List<Menu> menus = menuRepo.getByRestaurantId(restaurantId);
         menus.forEach(menu -> menu.removeDishes(dishes));
         menuRepo.saveAllAndFlush(menus);
@@ -42,7 +42,7 @@ public class DishService {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void delete(int id) {
         Dish dish = dishRepo.getById(id);
-        removeFromMenus(dish.getRestaurant().id(), dish);
+        removeFromMenu(dish.getRestaurant().id(), dish);
         dishRepo.deleteExisted(id);
     }
 }

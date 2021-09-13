@@ -17,7 +17,7 @@ public interface MenuRepository extends BaseRepository<Menu> {
 
     @EntityGraph(attributePaths = {"restaurant"}, type = EntityGraph.EntityGraphType.LOAD)
     @Query("SELECT m FROM Menu m WHERE " +
-            "(:startDate IS NULL OR m.date >= :startDate) AND (:endDate IS NULL OR m.date <= :endDate) ORDER BY m.date DESC")
+            "(:startDate IS NULL OR m.registered >= :startDate) AND (:endDate IS NULL OR m.registered <= :endDate) ORDER BY m.registered DESC")
     List<Menu> getAllWithRestaurantBetween(LocalDate startDate, LocalDate endDate);
 
     @EntityGraph(attributePaths = {"restaurant", "dishes"}, type = EntityGraph.EntityGraphType.LOAD)

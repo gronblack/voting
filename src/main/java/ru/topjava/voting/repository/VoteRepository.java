@@ -15,16 +15,16 @@ import java.util.Optional;
 public interface VoteRepository extends BaseRepository<Vote> {
     @Query("SELECT v FROM Vote v WHERE v.user.id = :userId " +
             "AND (:startDate IS NULL OR v.date >= :startDate) AND (:endDate IS NULL OR v.date <= :endDate) ORDER BY v.date DESC")
-    List<Vote> getBetween(int userId, LocalDate startDate, LocalDate endDate);
+    List<Vote> getByUserBetween(int userId, LocalDate startDate, LocalDate endDate);
+
+    @Query("SELECT v FROM Vote v WHERE v.user.id = :userId AND v.date = :date")
+    Optional<Vote> getByUserOnDate(int userId, LocalDate date);
 
     @EntityGraph(attributePaths = {"user"}, type = EntityGraph.EntityGraphType.LOAD)
     @Query("SELECT v FROM Vote v WHERE (:userId IS NULL OR v.user.id = :userId)" +
             "AND (:restaurantId IS NULL OR v.restaurant.id = :restaurantId)" +
             "AND (:startDate IS NULL OR v.date >= :startDate) AND (:endDate IS NULL OR v.date <= :endDate) ORDER BY v.date DESC")
     List<Vote> getByFilter(Integer userId, Integer restaurantId, LocalDate startDate, LocalDate endDate);
-
-    @Query("SELECT v FROM Vote v WHERE v.id = :id AND v.user.id = :userId")
-    Optional<Vote> getByIdAndUser(int id, int userId);
 
     // https://www.baeldung.com/jpa-queries-custom-result-with-aggregation-functions#solution_constructor
     @Query("SELECT new ru.topjava.voting.model.Rating(v.restaurant, COUNT(v)) FROM Vote v " +

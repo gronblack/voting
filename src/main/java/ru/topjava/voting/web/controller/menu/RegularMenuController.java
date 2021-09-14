@@ -10,7 +10,7 @@ import ru.topjava.voting.model.Menu;
 import java.time.LocalDate;
 import java.util.List;
 
-import static ru.topjava.voting.util.DateTimeUtil.getClock;
+import static ru.topjava.voting.util.DateTimeUtil.currentDate;
 
 @RestController
 @RequestMapping(value = RegularMenuController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -22,8 +22,8 @@ public class RegularMenuController extends BaseMenuController {
                                                   @RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
         log.info("getAllWithRestaurantBetween {} and {}", startDate, endDate);
         if (startDate == null & endDate == null) {
-            startDate = LocalDate.now(getClock());
-            endDate = LocalDate.now(getClock());
+            startDate = currentDate();
+            endDate = currentDate();
         }
         return menuRepo.getAllWithRestaurantBetween(startDate, endDate);
     }

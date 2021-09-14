@@ -3,8 +3,10 @@ package ru.topjava.voting.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import ru.topjava.voting.error.NotFoundException;
 import ru.topjava.voting.model.Dish;
 import ru.topjava.voting.model.Menu;
+import ru.topjava.voting.model.Restaurant;
 import ru.topjava.voting.repository.DishRepository;
 import ru.topjava.voting.repository.MenuRepository;
 import ru.topjava.voting.repository.RestaurantRepository;
@@ -25,11 +27,14 @@ public class DishService {
     }
 
     public Dish get(int id) {
-        return dishRepo.findById(id).orElseThrow();
+        return dishRepo.findById(id).orElseThrow(() -> new NotFoundException("Not found Dish with id=" + id));
     }
 
     public Dish saveFromTo(DishTo to) {
-        Dish dish = new Dish(to.getId(), to.getName(), to.getPrice(), restRepo.findById(to.getRestaurant_id()).orElseThrow());
+        int restaurant_id = to.getRestaurant_id();
+        Restaurant restaurant = restRepo.findById(restaurant_id)
+                .orElseThrow(() -> new NotFoundException("Not found Restaurant with id=" + restaurant_id));
+        Dish dish = new Dish(to.getId(), to.getName(), to.getPrice(), restaurant);
         return dishRepo.save(dish);
     }
 

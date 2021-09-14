@@ -38,7 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             log.debug("Authenticating '{}'", email);
             Optional<User> optionalUser = userRepository.getByEmail(email);
             return new AuthUser(optionalUser.orElseThrow(
-                    () -> new UsernameNotFoundException("User '" + email + "' was not found")));
+                    () -> new UsernameNotFoundException("User [" + email + "] was not found")));
         };
     }
 

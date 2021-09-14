@@ -1,5 +1,5 @@
 # Restaurant voting: [TopJava](https://javaops.ru/view/topjava) graduation project
-Spring-Boot, Spring Data JPA, HSQL.
+Spring-Boot, Spring Data JPA, Spring Security, Jackson, JUnit, H2.
 
 ## Task description
 Design and implement a REST API using Hibernate/Spring/SpringMVC (or Spring-Boot) **without frontend**.

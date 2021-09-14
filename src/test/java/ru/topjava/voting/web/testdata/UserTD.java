@@ -16,10 +16,10 @@ public class UserTD {
     public static final int ADMIN_ID = 2;
     public static final String ADMIN_MAIL = "admin@voting.ru";
     public static final String USER_MAIL = "user@gmail.com";
-    public static final String USER2_MAIL = "user2@gmail.com";
+    public static final String USER_ID3_MAIL = "user2@gmail.com";
     public static final User admin = new User(ADMIN_ID, "Admin", ADMIN_MAIL, "admin", Role.ADMIN, Role.USER);
     public static final User user = new User(USER_ID, "User", USER_MAIL, "password", Role.USER);
-    public static final User user2 = new User(3, "User2", "user2@gmail.com", "password2", Role.USER);
+    public static final User userId3 = new User(3, "User2", "user2@gmail.com", "password2", Role.USER);
 
     public static User getNewUser() {
         return new User(null, "New", "new@gmail.com", "{noop}newPassword", false, new Date(), Collections.singleton(Role.USER));

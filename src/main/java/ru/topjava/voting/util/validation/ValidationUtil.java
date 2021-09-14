@@ -3,10 +3,9 @@ package ru.topjava.voting.util.validation;
 import ru.topjava.voting.error.IllegalRequestDataException;
 import ru.topjava.voting.error.NotFoundException;
 import ru.topjava.voting.model.HasId;
+import ru.topjava.voting.util.DateTimeUtil;
 import ru.topjava.voting.web.GlobalExceptionHandler;
 
-import java.time.Clock;
-import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class ValidationUtil {
@@ -33,14 +32,8 @@ public class ValidationUtil {
         }
     }
 
-    public static void checkDate(LocalDate expected, LocalDate actual) {
-        if (!expected.isEqual(actual)) {
-            throw new IllegalRequestDataException("Expected date " + expected + " but was " + actual);
-        }
-    }
-
-    public static void checkTime(Clock clock) {
-        if (!LocalTime.now(clock).isBefore(VOTE_TIME_BORDER)) {
+    public static void checkTime() {
+        if (!LocalTime.now(DateTimeUtil.getClock()).isBefore(VOTE_TIME_BORDER)) {
             throw new IllegalRequestDataException(GlobalExceptionHandler.EXCEPTION_TOO_LATE_FOR_VOTING + " before " + VOTE_TIME_BORDER);
         }
     }

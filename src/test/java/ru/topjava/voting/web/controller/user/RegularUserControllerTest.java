@@ -45,7 +45,7 @@ class RegularUserControllerTest extends BaseControllerTest {
     void delete() throws Exception {
         perform(MockMvcRequestBuilders.delete(REST_URL))
                 .andExpect(status().isNoContent());
-        USER_MATCHER.assertMatch(userRepository.findAll(), admin, user2);
+        USER_MATCHER.assertMatch(userRepository.findAll(), admin, userId3);
     }
 
     @Test

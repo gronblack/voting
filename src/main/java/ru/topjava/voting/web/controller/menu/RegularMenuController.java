@@ -25,12 +25,12 @@ public class RegularMenuController extends BaseMenuController {
             startDate = currentDate();
             endDate = currentDate();
         }
-        return menuRepo.getAllWithRestaurantBetween(startDate, endDate);
+        return repository.getAllLoadRestaurantBetween(startDate, endDate);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Menu> get(@PathVariable int id) {
+    public ResponseEntity<Menu> getWithRestaurantDishes(@PathVariable int id) {
         log.info("get {}", id);
-        return ResponseEntity.of(menuRepo.get(id));
+        return ResponseEntity.of(repository.getByIdLoad(id));
     }
 }

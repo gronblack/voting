@@ -12,9 +12,9 @@ import java.util.Optional;
 public interface RestaurantRepository extends BaseRepository<Restaurant> {
     @EntityGraph(attributePaths = {"dishes"}, type = EntityGraph.EntityGraphType.LOAD)
     @Query("SELECT r FROM Restaurant r ORDER BY r.name ASC")
-    List<Restaurant> getAllWithDishes();
+    List<Restaurant> getAllLoadDishes();
 
     @EntityGraph(attributePaths = {"dishes"}, type = EntityGraph.EntityGraphType.LOAD)
     @Query("SELECT r FROM Restaurant r WHERE r.id=?1")
-    Optional<Restaurant> getWithDishes(int id);
+    Optional<Restaurant> getByIdLoadDishes(int id);
 }

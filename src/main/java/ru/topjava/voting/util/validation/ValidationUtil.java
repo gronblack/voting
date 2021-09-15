@@ -12,6 +12,9 @@ public class ValidationUtil {
     public static final LocalTime VOTE_TIME_BORDER = LocalTime.of(11, 0);
 
     public static void checkNew(HasId bean) {
+        if (bean == null) {
+            throw new IllegalRequestDataException("checkNew: bean must not be null");
+        }
         if (!bean.isNew()) {
             throw new IllegalRequestDataException(bean.getClass().getSimpleName() + " must be new (id=null)");
         }

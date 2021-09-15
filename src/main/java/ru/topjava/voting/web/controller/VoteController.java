@@ -45,7 +45,7 @@ public class VoteController {
                                   @RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
                                   @RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
         log.info("getByFilter: dates({} - {}), user {}, restaurant {}", startDate, endDate, user, restaurant);
-        return repository.getByFilter(user, restaurant, startDate, endDate);
+        return repository.getByFilterLoadUser(user, restaurant, startDate, endDate);
     }
 
     @GetMapping("/{id}")
@@ -74,7 +74,7 @@ public class VoteController {
         } else {
             log.info("getRating by date {}", date);
         }
-        return repository.getRating(date);
+        return repository.getRatingBetween(date);
     }
 
     @DeleteMapping

@@ -17,7 +17,7 @@ public abstract class BaseMenuController {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    protected MenuRepository menuRepo;
+    protected MenuRepository repository;
     @Autowired
     protected RestaurantRepository restaurantRepo;
     @Autowired
@@ -30,5 +30,9 @@ public abstract class BaseMenuController {
             to.setRegistered(currentDate());
         }
         return new Menu(to.getId(), to.getName(), to.getRegistered(), restaurant);
+    }
+
+    protected Menu getByIdLoad(int id) {
+        return repository.getByIdLoad(id).orElseThrow(() -> new NotFoundException("Not found Menu with id=" + id));
     }
 }

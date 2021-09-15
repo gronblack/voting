@@ -13,14 +13,14 @@ import java.util.Optional;
 public interface MenuRepository extends BaseRepository<Menu> {
     @EntityGraph(attributePaths = {"dishes"}, type = EntityGraph.EntityGraphType.LOAD)
     @Query("SELECT m FROM Menu m WHERE m.restaurant.id = :restaurantId")
-    List<Menu> getByRestaurantId(int restaurantId);
+    List<Menu> getByRestaurantIdLoadDishes(int restaurantId);
 
     @EntityGraph(attributePaths = {"restaurant"}, type = EntityGraph.EntityGraphType.LOAD)
     @Query("SELECT m FROM Menu m WHERE " +
             "(:startDate IS NULL OR m.registered >= :startDate) AND (:endDate IS NULL OR m.registered <= :endDate) ORDER BY m.registered DESC")
-    List<Menu> getAllWithRestaurantBetween(LocalDate startDate, LocalDate endDate);
+    List<Menu> getAllLoadRestaurantBetween(LocalDate startDate, LocalDate endDate);
 
     @EntityGraph(attributePaths = {"restaurant", "dishes"}, type = EntityGraph.EntityGraphType.LOAD)
     @Query("SELECT m FROM Menu m WHERE m.id = :id")
-    Optional<Menu> get(int id);
+    Optional<Menu> getByIdLoad(int id);
 }

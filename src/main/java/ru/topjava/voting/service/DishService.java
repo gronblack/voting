@@ -26,7 +26,7 @@ public class DishService {
         this.menuRepo = menuRepository;
     }
 
-    public Dish get(int id) {
+    public Dish getById(int id) {
         return dishRepo.findById(id).orElseThrow(() -> new NotFoundException("Not found Dish with id=" + id));
     }
 
@@ -46,7 +46,7 @@ public class DishService {
     }
 
     public void removeFromMenu(int restaurantId, Dish... dishes) {
-        List<Menu> menus = menuRepo.getByRestaurantId(restaurantId);
+        List<Menu> menus = menuRepo.getByRestaurantIdLoadDishes(restaurantId);
         menus.forEach(menu -> menu.removeDishes(dishes));
         menuRepo.saveAllAndFlush(menus);
     }

@@ -24,10 +24,10 @@ public interface VoteRepository extends BaseRepository<Vote> {
     @Query("SELECT v FROM Vote v WHERE (:userId IS NULL OR v.user.id = :userId)" +
             "AND (:restaurantId IS NULL OR v.restaurant.id = :restaurantId)" +
             "AND (:startDate IS NULL OR v.date >= :startDate) AND (:endDate IS NULL OR v.date <= :endDate) ORDER BY v.date DESC")
-    List<Vote> getByFilter(Integer userId, Integer restaurantId, LocalDate startDate, LocalDate endDate);
+    List<Vote> getByFilterLoadUser(Integer userId, Integer restaurantId, LocalDate startDate, LocalDate endDate);
 
     // https://www.baeldung.com/jpa-queries-custom-result-with-aggregation-functions#solution_constructor
     @Query("SELECT new ru.topjava.voting.model.Rating(v.restaurant, COUNT(v)) FROM Vote v " +
             "WHERE (:date IS NULL AND v.date = CURRENT_DATE) OR v.date = :date GROUP BY v.restaurant ORDER BY COUNT(v) DESC")
-    List<Rating<Restaurant>> getRating(LocalDate date);
+    List<Rating<Restaurant>> getRatingBetween(LocalDate date);
 }

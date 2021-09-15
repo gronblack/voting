@@ -83,7 +83,7 @@ public class VoteController {
         log.info("delete vote of user {}", authUser.id());
         checkTime();
         Vote vote = repository.getByUserOnDate(authUser.id(), currentDate())
-                .orElseThrow(() -> new NotFoundException(String.format("Not found Vote for User[%s] on date [%s]", authUser.getUser().getEmail(), currentDate())));
+                .orElseThrow(() -> new NotFoundException(String.format("Not found Vote today for User[%s]", authUser.getUser().getEmail())));
         repository.delete(vote);
     }
 
@@ -107,7 +107,7 @@ public class VoteController {
         log.info("update vote for user {}, restaurant {}", userId, restaurant);
         checkTime();
         Vote v = repository.getByUserOnDate(userId, currentDate())
-                .orElseThrow(() -> new NotFoundException("Not found Vote today for User=" + authUser.getUser().getEmail()));
+                .orElseThrow(() -> new NotFoundException(String.format("Not found Vote today for User[%s]", authUser.getUser().getEmail())));
         service.save(v, restaurant);
     }
 }

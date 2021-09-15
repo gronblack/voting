@@ -3,7 +3,6 @@ package ru.topjava.voting.web.controller.menu;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.topjava.voting.error.NotFoundException;
 import ru.topjava.voting.model.Menu;
 import ru.topjava.voting.model.Restaurant;
 import ru.topjava.voting.repository.MenuRepository;
@@ -12,6 +11,7 @@ import ru.topjava.voting.service.DishService;
 import ru.topjava.voting.to.MenuTo;
 
 import static ru.topjava.voting.util.DateTimeUtil.currentDate;
+import static ru.topjava.voting.util.ErrorUtil.notFound;
 
 public abstract class BaseMenuController {
     protected final Logger log = LoggerFactory.getLogger(getClass());
@@ -19,13 +19,13 @@ public abstract class BaseMenuController {
     @Autowired
     protected MenuRepository repository;
     @Autowired
-    protected RestaurantRepository restaurantRepo;
+    protected RestaurantRepository restaurantRepository;
     @Autowired
     protected DishService dishService;
 
     protected Menu fromTo(MenuTo to) {
-        Restaurant restaurant = restaurantRepo.findById(to.getRestaurantId())
-                .orElseThrow(() -> new NotFoundException("Not found Restaurant with id=" + to.getRestaurantId()));
+        Restaurant restaurant = restaurantRepository.findById(to.getRestaurantId())
+                .orElseThrow(notFound(Restaurant.class, to.getRestaurantId()));
         if (to.getRegistered() == null) {
             to.setRegistered(currentDate());
         }
@@ -33,6 +33,6 @@ public abstract class BaseMenuController {
     }
 
     protected Menu getByIdLoad(int id) {
-        return repository.getByIdLoad(id).orElseThrow(() -> new NotFoundException("Not found Menu with id=" + id));
+        return repository.getByIdLoad(id).orElseThrow(notFound(Menu.class, id));
     }
 }

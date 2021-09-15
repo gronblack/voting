@@ -3,7 +3,6 @@ package ru.topjava.voting.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import ru.topjava.voting.error.NotFoundException;
 import ru.topjava.voting.model.Dish;
 import ru.topjava.voting.model.Menu;
 import ru.topjava.voting.model.Restaurant;
@@ -14,47 +13,49 @@ import ru.topjava.voting.to.DishTo;
 
 import java.util.List;
 
+import static ru.topjava.voting.util.ErrorUtil.notFound;
+
 @Service
 public class DishService {
-    private final RestaurantRepository restRepo;
-    private final DishRepository dishRepo;
-    private final MenuRepository menuRepo;
+    private final DishRepository repository;
+    private final RestaurantRepository restRepository;
+    private final MenuRepository menuRepository;
 
     public DishService(RestaurantRepository restaurantRepository, DishRepository dishRepository, MenuRepository menuRepository) {
-        this.restRepo = restaurantRepository;
-        this.dishRepo = dishRepository;
-        this.menuRepo = menuRepository;
+        this.restRepository = restaurantRepository;
+        this.repository = dishRepository;
+        this.menuRepository = menuRepository;
     }
 
     public Dish getById(int id) {
-        return dishRepo.findById(id).orElseThrow(() -> new NotFoundException("Not found Dish with id=" + id));
+        return repository.findById(id).orElseThrow(notFound(Dish.class, id));
     }
 
     public Dish save(Dish dish) {
-        return dishRepo.save(dish);
+        return repository.save(dish);
     }
 
     public Dish fromTo(DishTo to) {
-        Restaurant restaurant = restRepo.findById(to.getRestaurant_id())
-                .orElseThrow(() -> new NotFoundException("Not found Restaurant with id=" + to.getRestaurant_id()));
+        Restaurant restaurant = restRepository.findById(to.getRestaurant_id())
+                .orElseThrow(notFound(Restaurant.class, to.getRestaurant_id()));
         return new Dish(to.getId(), to.getName(), to.getPrice(), restaurant);
     }
 
     public void removeAllDishesFromMenu(int restaurantId) {
         // https://www.baeldung.com/convert-array-to-list-and-list-to-array#1-using-plain-java
-        removeFromMenu(restaurantId, dishRepo.getAllByRestaurantId(restaurantId).toArray(new Dish[0]));
+        removeFromMenu(restaurantId, repository.getAllByRestaurantId(restaurantId).toArray(new Dish[0]));
     }
 
     public void removeFromMenu(int restaurantId, Dish... dishes) {
-        List<Menu> menus = menuRepo.getByRestaurantIdLoadDishes(restaurantId);
+        List<Menu> menus = menuRepository.getByRestaurantIdLoadDishes(restaurantId);
         menus.forEach(menu -> menu.removeDishes(dishes));
-        menuRepo.saveAllAndFlush(menus);
+        menuRepository.saveAllAndFlush(menus);
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void delete(int id) {
-        Dish dish = dishRepo.getById(id);
+        Dish dish = repository.getById(id);
         removeFromMenu(dish.getRestaurant().id(), dish);
-        dishRepo.deleteExisted(id);
+        repository.deleteExisted(id);
     }
 }

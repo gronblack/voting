@@ -30,12 +30,14 @@ public class DishService {
         return dishRepo.findById(id).orElseThrow(() -> new NotFoundException("Not found Dish with id=" + id));
     }
 
-    public Dish saveFromTo(DishTo to) {
-        int restaurant_id = to.getRestaurant_id();
-        Restaurant restaurant = restRepo.findById(restaurant_id)
-                .orElseThrow(() -> new NotFoundException("Not found Restaurant with id=" + restaurant_id));
-        Dish dish = new Dish(to.getId(), to.getName(), to.getPrice(), restaurant);
+    public Dish save(Dish dish) {
         return dishRepo.save(dish);
+    }
+
+    public Dish fromTo(DishTo to) {
+        Restaurant restaurant = restRepo.findById(to.getRestaurant_id())
+                .orElseThrow(() -> new NotFoundException("Not found Restaurant with id=" + to.getRestaurant_id()));
+        return new Dish(to.getId(), to.getName(), to.getPrice(), restaurant);
     }
 
     public void removeAllDishesFromMenu(int restaurantId) {

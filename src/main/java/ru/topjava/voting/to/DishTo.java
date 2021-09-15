@@ -21,6 +21,7 @@ public class DishTo extends NamedTo implements Serializable {
     public DishTo(String name, double price, int restaurant_id) {
         this(null, name, price, restaurant_id);
     }
+
     public DishTo(Integer id, String name, double price, int restaurant_id) {
         super(id, name);
         this.price = price;

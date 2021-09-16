@@ -4,10 +4,7 @@ import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "menu", uniqueConstraints = {@UniqueConstraint(columnNames = {"id", "restaurant_id"}, name = "menu_restaurant_idx")})
@@ -41,6 +38,10 @@ public class Menu extends NamedEntity {
         this(id, name, registered, restaurant, null);
     }
 
+    public Menu(Menu m) {
+        this(m.getId(), m.getName(), m.getRegistered(), m.getRestaurant(), m.getDishes());
+    }
+
     public Menu(Integer id, String name, LocalDate registered, Restaurant restaurant, Collection<Dish> dishes) {
         super(id, name);
         this.registered = registered;
@@ -69,7 +70,7 @@ public class Menu extends NamedEntity {
     }
 
     public void setDishes(Collection<Dish> dishes) {
-        this.dishes = CollectionUtils.isEmpty(dishes) ? Collections.emptySet() : Set.copyOf(dishes);
+        this.dishes = CollectionUtils.isEmpty(dishes) ? Collections.emptySet() : new HashSet<>(dishes);
     }
 
     public void addDishes(Dish... dishes) {
@@ -80,7 +81,8 @@ public class Menu extends NamedEntity {
         Arrays.asList(dishes).forEach(this.dishes::remove);
     }
 
-    public void clearDishes() {
+    public Menu clearDishes() {
         dishes.clear();
+        return this;
     }
 }

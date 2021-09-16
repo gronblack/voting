@@ -1,5 +1,7 @@
 package ru.topjava.voting.to;
 
+import org.springframework.lang.Nullable;
+
 import javax.validation.constraints.PositiveOrZero;
 import java.io.Serial;
 import java.io.Serializable;
@@ -9,6 +11,7 @@ public class MenuTo extends NamedTo implements Serializable {
     @Serial
     private static final long serialVersionUID = -2541687332583892431L;
 
+    @Nullable
     private LocalDate registered;
 
     @PositiveOrZero

@@ -20,7 +20,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.topjava.voting.web.testdata.CommonTD.NOT_FOUND_ID;
 import static ru.topjava.voting.web.testdata.DishTD.*;
-import static ru.topjava.voting.web.testdata.RestaurantTD.RESTAURANT_NOMA_ID;
 import static ru.topjava.voting.web.testdata.RestaurantTD.restaurantNoma;
 import static ru.topjava.voting.web.testdata.UserTD.ADMIN_MAIL;
 import static ru.topjava.voting.web.testdata.UserTD.USER_MAIL;
@@ -42,8 +41,8 @@ class AdminDishControllerTest extends BaseControllerTest {
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void createWithLocation() throws Exception {
-        DishTo newTo = new DishTo("New Dish", 52.5, RESTAURANT_NOMA_ID);
-        Dish newDish = new Dish(newTo.getId(), newTo.getName(), newTo.getPrice(), restaurantNoma);
+        Dish newDish = new Dish(null, "New Dish", 52.5, restaurantNoma);
+        DishTo newTo = fromDish(newDish);
 
         ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)

@@ -91,7 +91,6 @@ public class VoteController {
     @PostMapping
     public ResponseEntity<Vote> createWithLocation(@AuthenticationPrincipal AuthUser authUser, @RequestParam int restaurant) {
         log.info("create vote for user {}, restaurant {}", authUser.id(), restaurant);
-        checkTime();
         Vote v = new Vote(currentDate(), authUser.getUser());
         Vote created = service.save(v, restaurant);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()

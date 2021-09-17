@@ -10,11 +10,12 @@
     </parent>
     <groupId>ru.topjava</groupId>
     <artifactId>voting</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0</version>
     <name>voting</name>
     <description>Restaurant voting: TopJava graduation project</description>
     <properties>
         <java.version>16</java.version>
+        <springdoc.version>1.5.10</springdoc.version>
     </properties>
     <dependencies>
         <dependency>
@@ -38,6 +39,18 @@
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-hibernate5</artifactId>
+        </dependency>
+
+        <!--Swagger-->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>${springdoc.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-security</artifactId>
+            <version>${springdoc.version}</version>
         </dependency>
 
         <dependency>

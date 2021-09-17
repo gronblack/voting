@@ -29,7 +29,7 @@ public class MenuTD {
     public static final Dish dishNomaFree = new Dish(2, "Onion soup", 80.50, restaurantNoma);
 
     public static final Menu menuNomaTodayID2 = new Menu(2, "Noma lunch 2", currentDate, restaurantNoma);
-    public static Menu menuNomaTodayID2WithDishes = new Menu(2, "Noma lunch 2", currentDate, restaurantNoma, List.of(dishNoma1, dishNoma3));
+    public static final Menu menuNomaTodayID2WithDishes = new Menu(2, "Noma lunch 2", currentDate, restaurantNoma, List.of(dishNoma1, dishNoma3));
     public static final Menu menuMirazurTodayID4 = new Menu(4, "Mirazur lunch 2", currentDate, restaurantMirazur);
     public static final Menu menuAsadorTodayID6 = new Menu(6, "Asador lunch 2", currentDate, restaurantAsador);
 

@@ -1,5 +1,6 @@
 package ru.topjava.voting.web.controller.menu;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ public class RegularMenuController extends BaseMenuController {
     public static final String REST_URL = "/api/menu";
 
     @GetMapping
+    @Operation(summary = "Get all with restaurants between dates (default - for current date)", tags = "menu")
     public List<Menu> getAllWithRestaurantBetween(@RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
                                                   @RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
         log.info("getAllWithRestaurantBetween {} and {}", startDate, endDate);
@@ -29,6 +31,7 @@ public class RegularMenuController extends BaseMenuController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Get by id with restaurant and dishes", tags = "menu")
     public ResponseEntity<Menu> getWithRestaurantDishes(@PathVariable int id) {
         log.info("get {}", id);
         return ResponseEntity.of(repository.getByIdLoad(id));

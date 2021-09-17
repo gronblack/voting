@@ -1,5 +1,6 @@
 package ru.topjava.voting.web.controller.user;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,18 +23,21 @@ public class AdminUserController extends BaseUserController {
     public static final String REST_URL = "/api/admin/users";
 
     @GetMapping
+    @Operation(summary = "Get all", tags = "users")
     public List<User> getAll() {
         log.info("getAll");
         return repository.findAll(Sort.by(Sort.Direction.ASC, "name", "email"));
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Get by id", tags = "users")
     public ResponseEntity<User> get(@PathVariable int id) {
         log.info("get {}", id);
         return ResponseEntity.of(repository.findById(id));
     }
 
     @GetMapping("/by")
+    @Operation(summary = "Get by email", tags = "users")
     public ResponseEntity<User> getByEmail(@RequestParam String email) {
         log.info("getByEmail {}", email);
         return ResponseEntity.of(repository.getByEmail(email));
@@ -42,11 +46,13 @@ public class AdminUserController extends BaseUserController {
     @Override
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Delete by id", tags = "users")
     public void delete(@PathVariable int id) {
         super.delete(id);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Create new", tags = "users")
     public ResponseEntity<User> createWithLocation(@Valid @RequestBody User user) {
         log.info("create {}", user);
         checkNew(user);
@@ -59,6 +65,7 @@ public class AdminUserController extends BaseUserController {
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Update", tags = "users")
     public void update(@PathVariable int id, @Valid @RequestBody User user) {
         log.info("update {} with id={}", user, id);
         assureIdConsistent(user, id);
@@ -68,6 +75,7 @@ public class AdminUserController extends BaseUserController {
     @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Transactional
+    @Operation(summary = "Enable/disable", tags = "users")
     public void enable(@PathVariable int id, @RequestParam boolean enabled) {
         log.info(enabled ? "enable {}" : "disable {}", id);
         User user = repository.getById(id);

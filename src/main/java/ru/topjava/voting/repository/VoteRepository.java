@@ -29,5 +29,5 @@ public interface VoteRepository extends BaseRepository<Vote> {
     // https://www.baeldung.com/jpa-queries-custom-result-with-aggregation-functions#solution_constructor
     @Query("SELECT new ru.topjava.voting.model.Rating(v.restaurant, COUNT(v)) FROM Vote v " +
             "WHERE (:date IS NULL AND v.date = CURRENT_DATE) OR v.date = :date GROUP BY v.restaurant ORDER BY COUNT(v) DESC")
-    List<Rating<Restaurant>> getRatingBetween(LocalDate date);
+    List<Rating<Restaurant>> getRatingOnDate(LocalDate date);
 }

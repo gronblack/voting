@@ -1,5 +1,6 @@
 package ru.topjava.voting.web.controller.restaurant;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,24 +18,28 @@ public class RegularRestaurantController extends BaseRestaurantController {
     public static final String REST_URL = "/api/restaurants";
 
     @GetMapping
+    @Operation(summary = "Get all", tags = "restaurants")
     public List<Restaurant> getAll() {
         log.info("getAll");
         return repository.findAll(Sort.by(Sort.Direction.ASC, "name"));
     }
 
     @GetMapping("/with-dishes")
+    @Operation(summary = "Get all with dishes", tags = "restaurants")
     public List<Restaurant> getAllWithDishes() {
         log.info("getAllWithDishes");
         return repository.getAllLoadDishes();
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Get by id", tags = "restaurants")
     public ResponseEntity<Restaurant> get(@PathVariable int id) {
         log.info("get {}", id);
         return ResponseEntity.of(repository.findById(id));
     }
 
     @GetMapping("/{id}/with-dishes")
+    @Operation(summary = "Get by id with dishes", tags = "restaurants")
     public ResponseEntity<Restaurant> getWithDishes(@PathVariable int id) {
         log.info("getWithDishes {}", id);
         return ResponseEntity.of(repository.getByIdLoadDishes(id));

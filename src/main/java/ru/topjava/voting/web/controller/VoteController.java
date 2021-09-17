@@ -1,5 +1,6 @@
 package ru.topjava.voting.web.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -40,6 +41,7 @@ public class VoteController {
     }
 
     @GetMapping
+    @Operation(summary = "Get all by filter (default - for current date)", tags = "votes")
     public List<Vote> getByFilter(@RequestParam @Nullable Integer user,
                                   @RequestParam @Nullable Integer restaurant,
                                   @RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
@@ -49,12 +51,14 @@ public class VoteController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Get by id", tags = "votes")
     public ResponseEntity<Vote> get(@PathVariable int id) {
         log.info("get {}", id);
         return ResponseEntity.of(repository.findById(id));
     }
 
     @GetMapping("/my")
+    @Operation(summary = "Get votes for authorized user between dates (default - for current date)", tags = "votes")
     public List<Vote> getMyBetween(@AuthenticationPrincipal AuthUser authUser,
                                    @RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
                                    @RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
@@ -68,17 +72,19 @@ public class VoteController {
     }
 
     @GetMapping("/rating")
+    @Operation(summary = "Get restaurants rating on date (default - for current date)", tags = "votes")
     public List<Rating<Restaurant>> getRating(@RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         if (date == null) {
             log.info("getRating by current date");
         } else {
             log.info("getRating by date {}", date);
         }
-        return repository.getRatingBetween(date);
+        return repository.getRatingOnDate(date);
     }
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Delete vote for authorized user for current date", tags = "votes")
     public void delete(@AuthenticationPrincipal AuthUser authUser) {
         log.info("delete vote of user {}", authUser.id());
         checkTime();
@@ -89,6 +95,7 @@ public class VoteController {
 
     // https://stackoverflow.com/a/55653219/16899097
     @PostMapping
+    @Operation(summary = "Create vote for authorized user", tags = "votes")
     public ResponseEntity<Vote> createWithLocation(@AuthenticationPrincipal AuthUser authUser, @RequestParam int restaurant) {
         log.info("create vote for user {}, restaurant {}", authUser.id(), restaurant);
         Vote v = new Vote(currentDate(), authUser.getUser());
@@ -101,6 +108,7 @@ public class VoteController {
 
     @PutMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Update vote for authorized user", tags = "votes")
     public void update(@AuthenticationPrincipal AuthUser authUser, @RequestParam int restaurant) {
         int userId = authUser.id();
         log.info("update vote for user {}, restaurant {}", userId, restaurant);

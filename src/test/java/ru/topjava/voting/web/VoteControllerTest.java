@@ -24,9 +24,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static ru.topjava.voting.util.DateTimeUtil.currentDate;
 import static ru.topjava.voting.web.testdata.CommonTD.NOT_FOUND_ID;
-import static ru.topjava.voting.web.testdata.RestaurantTD.*;
+import static ru.topjava.voting.web.testdata.RestaurantTD.RESTAURANT_NOMA_ID;
+import static ru.topjava.voting.web.testdata.RestaurantTD.restaurantNoma;
 import static ru.topjava.voting.web.testdata.UserTD.*;
 import static ru.topjava.voting.web.testdata.VoteTD.*;
 

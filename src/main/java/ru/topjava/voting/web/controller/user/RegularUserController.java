@@ -1,6 +1,7 @@
 package ru.topjava.voting.web.controller.user;
 
 import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -26,11 +27,12 @@ import static ru.topjava.voting.util.validation.ValidationUtil.checkNew;
 
 @RestController
 @RequestMapping(value = RegularUserController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+@CacheConfig(cacheNames = "users")
 public class RegularUserController extends BaseUserController {
     public static final String REST_URL = "/api/account";
 
     @GetMapping
-    @Cacheable("users")
+    @Cacheable
     @Operation(summary = "Get authorized user data", tags = "account")
     public User get(@AuthenticationPrincipal AuthUser authUser) {
         log.info("get auth user {}", authUser.id());
@@ -39,7 +41,7 @@ public class RegularUserController extends BaseUserController {
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @CacheEvict(value = "users", key = "#authUser.username")
+    @CacheEvict(key = "#authUser.username")
     @Operation(summary = "Delete yourself", tags = "account")
     public void delete(@AuthenticationPrincipal AuthUser authUser) {
         log.info("delete {}", authUser.id());
@@ -48,7 +50,7 @@ public class RegularUserController extends BaseUserController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    @CachePut(value = "users", key = "#userTo.email")
+    @CachePut(key = "#userTo.email")
     @Operation(summary = "Register yourself", tags = "account")
     public ResponseEntity<User> register(@Valid @RequestBody UserTo userTo) {
         log.info("register {}", userTo);
@@ -63,7 +65,7 @@ public class RegularUserController extends BaseUserController {
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Transactional
-    @CachePut(value = "users", key = "#authUser.username")
+    @CachePut(key = "#authUser.username")
     @Operation(summary = "Update authorized user data", tags = "account")
     public void update(@AuthenticationPrincipal AuthUser authUser, @RequestBody @Valid UserTo userTo) {
         log.info("update {} with id={}", userTo, authUser.id());

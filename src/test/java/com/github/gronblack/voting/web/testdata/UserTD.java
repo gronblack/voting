@@ -21,7 +21,7 @@ public class UserTD {
     public static final User user = new User(USER_ID, "User", USER_MAIL, "password", Role.USER);
     public static final User userId3 = new User(3, "User2", "user2@gmail.com", "password2", Role.USER);
 
-    public static User getNewUser() {
+    public static User getNew() {
         return new User(null, "New", "new@gmail.com", "{noop}newPassword", false, new Date(), Collections.singleton(Role.USER));
     }
 
@@ -31,5 +31,9 @@ public class UserTD {
 
     public static String jsonWithPassword(User user, String passw) {
         return JsonUtil.writeAdditionProps(user, "password", passw);
+    }
+
+    public static User copy(User user) {
+        return new User(user.getId(), user.getName(), user.getEmail(), user.getPassword(), user.isEnabled(), user.getRegistered(), user.getRoles());
     }
 }

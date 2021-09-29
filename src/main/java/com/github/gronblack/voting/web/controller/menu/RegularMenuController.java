@@ -1,6 +1,7 @@
 package com.github.gronblack.voting.web.controller.menu;
 
 import io.swagger.v3.oas.annotations.Operation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import static com.github.gronblack.voting.util.DateTimeUtil.currentDate;
 
 @RestController
 @RequestMapping(value = RegularMenuController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+@Slf4j
 public class RegularMenuController extends BaseMenuController {
     public static final String REST_URL = "/api/menu";
 

@@ -1,25 +1,21 @@
 package com.github.gronblack.voting.web;
 
+import com.github.gronblack.voting.model.HasIdAndEmail;
+import com.github.gronblack.voting.repository.UserRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
-import com.github.gronblack.voting.model.HasIdAndEmail;
-import com.github.gronblack.voting.repository.UserRepository;
 
 import javax.servlet.http.HttpServletRequest;
 
 @Component
+@AllArgsConstructor
 public class UniqueMailValidator implements org.springframework.validation.Validator {
     private final UserRepository repository;
     private final HttpServletRequest request;
-
-    public UniqueMailValidator(UserRepository repository, @Nullable HttpServletRequest request) {
-        this.repository = repository;
-        this.request = request;
-    }
 
     @Override
     public boolean supports(@NonNull Class<?> clazz) {

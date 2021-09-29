@@ -34,4 +34,8 @@ public class VoteTD {
     public static Vote getNewVote(User user, Restaurant restaurant) {
         return new Vote(null, currentDate(), user, restaurant);
     }
+
+    public static Vote copy(Vote vote) {
+        return new Vote(vote.getId(), vote.getDate(), vote.getUser(), vote.getRestaurant());
+    }
 }

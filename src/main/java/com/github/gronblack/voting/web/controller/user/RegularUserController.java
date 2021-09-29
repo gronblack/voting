@@ -3,6 +3,7 @@ package com.github.gronblack.voting.web.controller.user;
 import com.github.gronblack.voting.to.UserTo;
 import com.github.gronblack.voting.web.AuthUser;
 import io.swagger.v3.oas.annotations.Operation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -28,6 +29,7 @@ import static com.github.gronblack.voting.util.validation.ValidationUtil.checkNe
 @RestController
 @RequestMapping(value = RegularUserController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @CacheConfig(cacheNames = "users")
+@Slf4j
 public class RegularUserController extends BaseUserController {
     public static final String REST_URL = "/api/account";
 

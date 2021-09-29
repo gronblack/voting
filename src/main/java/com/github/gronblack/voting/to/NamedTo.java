@@ -1,29 +1,23 @@
 package com.github.gronblack.voting.to;
 
 import com.github.gronblack.voting.util.validation.NoHtml;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+@Data
+@EqualsAndHashCode(callSuper = true)
 public abstract class NamedTo extends BaseTo {
+
     @NotBlank
     @Size(min = 2, max = 100)
     @NoHtml
     protected String name;
 
-    public NamedTo() {
-    }
-
     public NamedTo(Integer id, String name) {
         super(id);
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
         this.name = name;
     }
 

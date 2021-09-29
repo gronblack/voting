@@ -1,10 +1,15 @@
 package com.github.gronblack.voting.web.controller;
 
 import com.github.gronblack.voting.error.NotFoundException;
+import com.github.gronblack.voting.model.Rating;
+import com.github.gronblack.voting.model.Restaurant;
+import com.github.gronblack.voting.model.Vote;
+import com.github.gronblack.voting.repository.VoteRepository;
+import com.github.gronblack.voting.service.VoteService;
 import com.github.gronblack.voting.web.AuthUser;
 import io.swagger.v3.oas.annotations.Operation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -13,11 +18,6 @@ import org.springframework.lang.Nullable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import com.github.gronblack.voting.model.Rating;
-import com.github.gronblack.voting.model.Restaurant;
-import com.github.gronblack.voting.model.Vote;
-import com.github.gronblack.voting.repository.VoteRepository;
-import com.github.gronblack.voting.service.VoteService;
 
 import java.net.URI;
 import java.time.LocalDate;
@@ -28,17 +28,13 @@ import static com.github.gronblack.voting.util.validation.ValidationUtil.checkTi
 
 @RestController
 @RequestMapping(value = VoteController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+@Slf4j
+@AllArgsConstructor
 public class VoteController {
-    protected final Logger log = LoggerFactory.getLogger(getClass());
     public static final String REST_URL = "/api/votes";
 
     private final VoteRepository repository;
     private final VoteService service;
-
-    public VoteController(VoteRepository repository, VoteService service) {
-        this.repository = repository;
-        this.service = service;
-    }
 
     @GetMapping
     @Operation(summary = "Get all by filter (default - for current date)", tags = "votes")

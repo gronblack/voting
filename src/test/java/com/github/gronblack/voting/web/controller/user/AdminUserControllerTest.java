@@ -15,6 +15,8 @@ import com.github.gronblack.voting.repository.UserRepository;
 import com.github.gronblack.voting.web.BaseControllerTest;
 import com.github.gronblack.voting.web.GlobalExceptionHandler;
 
+import static com.github.gronblack.voting.web.testdata.UserTD.copy;
+import static com.github.gronblack.voting.web.testdata.UserTD.user;
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -61,7 +63,7 @@ public class AdminUserControllerTest extends BaseControllerTest {
         perform(MockMvcRequestBuilders.get(REST_URL))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(UserTD.USER_MATCHER.contentJson(UserTD.admin, UserTD.user, UserTD.userId3));
+                .andExpect(UserTD.USER_MATCHER.contentJson(UserTD.admin, user, UserTD.userId3));
     }
 
     @Test
@@ -133,7 +135,7 @@ public class AdminUserControllerTest extends BaseControllerTest {
     @Test
     @WithUserDetails(value = UserTD.ADMIN_MAIL)
     void createWithLocation() throws Exception {
-        User newUser = UserTD.getNewUser();
+        User newUser = UserTD.getNew();
         ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(UserTD.jsonWithPassword(newUser, newUser.getPassword())))
@@ -172,7 +174,7 @@ public class AdminUserControllerTest extends BaseControllerTest {
     @Test
     @WithUserDetails(value = UserTD.ADMIN_MAIL)
     void updateInvalid() throws Exception {
-        User invalid = new User(UserTD.user);
+        User invalid = copy(user);
         invalid.setName("");
         perform(MockMvcRequestBuilders.put(REST_URL + UserTD.USER_ID)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -184,7 +186,7 @@ public class AdminUserControllerTest extends BaseControllerTest {
     @Test
     @WithUserDetails(value = UserTD.ADMIN_MAIL)
     void updateHtmlUnsafe() throws Exception {
-        User updated = new User(UserTD.user);
+        User updated = copy(user);
         updated.setName("<script>alert(123)</script>");
         perform(MockMvcRequestBuilders.put(REST_URL + UserTD.USER_ID)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -197,7 +199,7 @@ public class AdminUserControllerTest extends BaseControllerTest {
     @Transactional(propagation = Propagation.NEVER)
     @WithUserDetails(value = UserTD.ADMIN_MAIL)
     void updateDuplicate() throws Exception {
-        User updated = new User(UserTD.user);
+        User updated = copy(user);
         updated.setEmail(UserTD.ADMIN_MAIL);
         perform(MockMvcRequestBuilders.put(REST_URL + UserTD.USER_ID)
                 .contentType(MediaType.APPLICATION_JSON)

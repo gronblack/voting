@@ -1,8 +1,11 @@
 package com.github.gronblack.voting.util;
 
+import lombok.experimental.UtilityClass;
+
 import java.time.Clock;
 import java.time.LocalDate;
 
+@UtilityClass
 public class DateTimeUtil {
     private static Clock clock; // https://stackoverflow.com/a/45833128
 

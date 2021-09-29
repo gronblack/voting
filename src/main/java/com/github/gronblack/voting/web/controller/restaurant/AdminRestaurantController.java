@@ -1,6 +1,8 @@
 package com.github.gronblack.voting.web.controller.restaurant;
 
 import io.swagger.v3.oas.annotations.Operation;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,14 +19,12 @@ import static com.github.gronblack.voting.util.validation.ValidationUtil.checkNe
 
 @RestController
 @RequestMapping(value = AdminRestaurantController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+@Slf4j
+@AllArgsConstructor
 public class AdminRestaurantController extends BaseRestaurantController {
     public static final String REST_URL = "/api/admin/restaurants";
 
     private final DishService dishService;
-
-    public AdminRestaurantController(DishService dishService) {
-        this.dishService = dishService;
-    }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Create", tags = "restaurants")

@@ -15,6 +15,7 @@ import com.github.gronblack.voting.util.UserUtil;
 import com.github.gronblack.voting.web.BaseControllerTest;
 import com.github.gronblack.voting.web.GlobalExceptionHandler;
 
+import static com.github.gronblack.voting.web.testdata.UserTD.copy;
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -83,7 +84,7 @@ class RegularUserControllerTest extends BaseControllerTest {
                 .andDo(print())
                 .andExpect(status().isNoContent());
 
-        UserTD.USER_MATCHER.assertMatch(userRepository.getById(UserTD.USER_ID), UserUtil.updateFromTo(new User(UserTD.user), updatedTo));
+        UserTD.USER_MATCHER.assertMatch(userRepository.getById(UserTD.USER_ID), UserUtil.updateFromTo(copy(UserTD.user), updatedTo));
     }
 
     @Test

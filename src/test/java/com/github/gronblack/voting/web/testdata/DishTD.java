@@ -10,9 +10,9 @@ public class DishTD {
     public static final int DISH_1_ID = 1;
     public static final int DISH_9_ID = 9;
 
-    private static final Restaurant restaurantNoma = new Restaurant(1, "Noma");
-    private static final Restaurant restaurantMirazur = new Restaurant(2, "Mirazur");
-    private static final Restaurant restaurantAsador = new Restaurant(3, "Asador");
+    private static final Restaurant restaurantNoma = new Restaurant(1, "Noma", null);
+    private static final Restaurant restaurantMirazur = new Restaurant(2, "Mirazur", null);
+    private static final Restaurant restaurantAsador = new Restaurant(3, "Asador", null);
 
     public static final Dish dish1 = new Dish(1, "Beef Wellington", 150.25, restaurantNoma);
     public static final Dish dish2 = new Dish(2, "Onion soup", 80.50, restaurantNoma);
@@ -26,5 +26,9 @@ public class DishTD {
 
     public static DishTo fromDish(Dish dish) {
         return new DishTo(dish.getId(), dish.getName(), dish.getPrice(), dish.getRestaurant().getId());
+    }
+
+    public static Dish copy(Dish dish) {
+        return new Dish(dish.id(), dish.getName(), dish.getPrice(), dish.getRestaurant());
     }
 }

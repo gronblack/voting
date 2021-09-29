@@ -1,16 +1,16 @@
 package com.github.gronblack.voting.web.controller;
 
+import com.github.gronblack.voting.model.Dish;
+import com.github.gronblack.voting.service.DishService;
+import com.github.gronblack.voting.to.DishTo;
 import io.swagger.v3.oas.annotations.Operation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import com.github.gronblack.voting.model.Dish;
-import com.github.gronblack.voting.service.DishService;
-import com.github.gronblack.voting.to.DishTo;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -20,15 +20,12 @@ import static com.github.gronblack.voting.util.validation.ValidationUtil.checkNe
 
 @RestController
 @RequestMapping(value = AdminDishController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+@Slf4j
+@AllArgsConstructor
 public class AdminDishController {
     public static final String REST_URL = "/api/admin/dishes";
-    protected final Logger log = LoggerFactory.getLogger(getClass());
 
     private final DishService service;
-
-    public AdminDishController(DishService service) {
-        this.service = service;
-    }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Create", tags = "dishes")

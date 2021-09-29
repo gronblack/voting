@@ -1,8 +1,8 @@
 package com.github.gronblack.voting.web;
 
 import com.github.gronblack.voting.error.AppException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.error.ErrorAttributeOptions;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
 import org.springframework.http.HttpHeaders;
@@ -24,16 +24,13 @@ import java.util.stream.Collectors;
 import static org.springframework.boot.web.error.ErrorAttributeOptions.Include.MESSAGE;
 
 @RestControllerAdvice
+@AllArgsConstructor
+@Slf4j
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
-    private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
     public static final String EXCEPTION_DUPLICATE_EMAIL = "User with this email already exists";
     public static final String EXCEPTION_TOO_LATE_FOR_VOTING = "Too late for create or change vote today! Try tomorrow";
 
     private final ErrorAttributes errorAttributes;
-
-    public GlobalExceptionHandler(ErrorAttributes errorAttributes) {
-        this.errorAttributes = errorAttributes;
-    }
 
     @NonNull
     @Override

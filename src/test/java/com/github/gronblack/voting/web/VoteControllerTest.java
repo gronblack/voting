@@ -147,7 +147,7 @@ class VoteControllerTest extends BaseControllerTest {
         @WithUserDetails(value = USER_MAIL)
         void update() throws Exception {
             DateTimeUtil.setClock(voteBorderClock(true));
-            Vote updated = new Vote(userVote6Today);
+            Vote updated = copy(userVote6Today);
             updated.setRestaurant(restaurantNoma);
             perform(MockMvcRequestBuilders.put(REST_URL)
                     .param("restaurant", String.valueOf(RESTAURANT_NOMA_ID)))

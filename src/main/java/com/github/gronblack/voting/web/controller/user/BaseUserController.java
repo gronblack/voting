@@ -1,17 +1,16 @@
 package com.github.gronblack.voting.web.controller.user;
 
-import com.github.gronblack.voting.web.UniqueMailValidator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import com.github.gronblack.voting.model.User;
 import com.github.gronblack.voting.repository.UserRepository;
 import com.github.gronblack.voting.util.UserUtil;
+import com.github.gronblack.voting.web.UniqueMailValidator;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 
+@Slf4j
 public abstract class BaseUserController {
-    protected final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
     protected UserRepository repository;

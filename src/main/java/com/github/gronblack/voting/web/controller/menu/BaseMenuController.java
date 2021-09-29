@@ -1,9 +1,6 @@
 package com.github.gronblack.voting.web.controller.menu;
 
 import com.github.gronblack.voting.error.IllegalRequestDataException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import com.github.gronblack.voting.model.Dish;
 import com.github.gronblack.voting.model.Menu;
 import com.github.gronblack.voting.model.Restaurant;
@@ -11,17 +8,19 @@ import com.github.gronblack.voting.repository.MenuRepository;
 import com.github.gronblack.voting.repository.RestaurantRepository;
 import com.github.gronblack.voting.service.DishService;
 import com.github.gronblack.voting.to.MenuTo;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import static com.github.gronblack.voting.util.DateTimeUtil.currentDate;
 import static com.github.gronblack.voting.util.ErrorUtil.notFound;
 
 public abstract class BaseMenuController {
-    protected final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
     protected MenuRepository repository;
+
     @Autowired
     protected RestaurantRepository restaurantRepository;
+
     @Autowired
     protected DishService dishService;
 

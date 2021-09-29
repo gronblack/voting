@@ -1,5 +1,6 @@
 package com.github.gronblack.voting.model;
 
+import lombok.*;
 import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
@@ -8,7 +9,12 @@ import java.util.*;
 
 @Entity
 @Table(name = "menu", uniqueConstraints = {@UniqueConstraint(columnNames = {"id", "restaurant_id"}, name = "menu_restaurant_idx")})
+@Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString(callSuper = true)
 public class Menu extends NamedEntity {
+
     @Column(name = "registered", nullable = false)
     private LocalDate registered;
 
@@ -23,23 +29,8 @@ public class Menu extends NamedEntity {
     )
     private Set<Dish> dishes;
 
-    public Menu() {
-    }
-
-    public Menu(String name, LocalDate registered, Restaurant restaurant) {
-        this(null, name, registered, restaurant, null);
-    }
-
-    public Menu(String name, LocalDate registered, Restaurant restaurant, Dish... dishes) {
-        this(null, name, registered, restaurant, Arrays.asList(dishes));
-    }
-
     public Menu(Integer id, String name, LocalDate registered, Restaurant restaurant) {
         this(id, name, registered, restaurant, null);
-    }
-
-    public Menu(Menu m) {
-        this(m.getId(), m.getName(), m.getRegistered(), m.getRestaurant(), m.getDishes());
     }
 
     public Menu(Integer id, String name, LocalDate registered, Restaurant restaurant, Collection<Dish> dishes) {
@@ -47,26 +38,6 @@ public class Menu extends NamedEntity {
         this.registered = registered;
         this.restaurant = restaurant;
         setDishes(dishes);
-    }
-
-    public LocalDate getRegistered() {
-        return registered;
-    }
-
-    public void setRegistered(LocalDate date) {
-        this.registered = date;
-    }
-
-    public Restaurant getRestaurant() {
-        return restaurant;
-    }
-
-    public void setRestaurant(Restaurant restaurant) {
-        this.restaurant = restaurant;
-    }
-
-    public Set<Dish> getDishes() {
-        return dishes;
     }
 
     public void setDishes(Collection<Dish> dishes) {
@@ -79,10 +50,5 @@ public class Menu extends NamedEntity {
 
     public void removeDishes(Dish... dishes) {
         Arrays.asList(dishes).forEach(this.dishes::remove);
-    }
-
-    public Menu clearDishes() {
-        dishes.clear();
-        return this;
     }
 }

@@ -5,9 +5,11 @@ import com.github.gronblack.voting.error.NotFoundException;
 import com.github.gronblack.voting.model.HasId;
 import com.github.gronblack.voting.util.DateTimeUtil;
 import com.github.gronblack.voting.web.GlobalExceptionHandler;
+import lombok.experimental.UtilityClass;
 
 import java.time.LocalTime;
 
+@UtilityClass
 public class ValidationUtil {
     public static final LocalTime VOTE_TIME_BORDER = LocalTime.of(11, 0);
 

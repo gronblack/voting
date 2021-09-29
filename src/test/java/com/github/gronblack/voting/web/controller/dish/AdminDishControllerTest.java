@@ -70,7 +70,7 @@ class AdminDishControllerTest extends BaseControllerTest {
     void update() throws Exception {
         DishTo to = fromDish(dish1);
         to.setName("Updated");
-        Dish dish = new Dish(dish1);
+        Dish dish = copy(dish1);
         dish.setName("Updated");
 
         perform(MockMvcRequestBuilders.put(REST_URL + DISH_1_ID)

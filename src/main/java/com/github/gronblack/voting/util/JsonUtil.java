@@ -4,10 +4,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
+import lombok.experimental.UtilityClass;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+@UtilityClass
 public class JsonUtil {
     private static ObjectMapper mapper;
 

@@ -1,11 +1,12 @@
 package com.github.gronblack.voting.web;
 
+import lombok.experimental.UtilityClass;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import com.github.gronblack.voting.model.User;
 
 import static java.util.Objects.requireNonNull;
 
+@UtilityClass
 public class SecurityUtil {
     private static AuthUser safeGet() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -18,10 +19,6 @@ public class SecurityUtil {
 
     public static AuthUser get() {
         return requireNonNull(safeGet(), "No authorized user found");
-    }
-
-    public static User authUser() {
-        return get().getUser();
     }
 
     public static int authId() {

@@ -1,9 +1,11 @@
 package com.github.gronblack.voting.util;
 
+import lombok.experimental.UtilityClass;
 import org.h2.tools.Server;
 
 import java.sql.SQLException;
 
+@UtilityClass
 public class AppUtil {
     private static Server server;
     private static final String[] CONNECTION_PARAMS = new String[] {"-tcp", "-tcpAllowOthers", "-tcpPort", "9092"};

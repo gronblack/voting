@@ -13,6 +13,7 @@ import com.github.gronblack.voting.model.Restaurant;
 import com.github.gronblack.voting.util.JsonUtil;
 import com.github.gronblack.voting.web.BaseControllerTest;
 
+import static com.github.gronblack.voting.web.testdata.RestaurantTD.of;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -35,7 +36,7 @@ class AdminRestaurantControllerTest extends BaseControllerTest {
     @Test
     @WithUserDetails(value = UserTD.ADMIN_MAIL)
     void createWithLocation() throws Exception {
-        Restaurant nr = new Restaurant(null, "Test Restaurant");
+        Restaurant nr = of("Test Restaurant");
         ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(nr)))
@@ -50,7 +51,7 @@ class AdminRestaurantControllerTest extends BaseControllerTest {
     @Test
     @WithUserDetails(value = UserTD.ADMIN_MAIL)
     void createInvalid() throws Exception {
-        Restaurant invalid = new Restaurant(null, null);
+        Restaurant invalid = new Restaurant(null, null, null);
         perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(invalid)))
@@ -61,7 +62,7 @@ class AdminRestaurantControllerTest extends BaseControllerTest {
     @Test
     @WithUserDetails(value = UserTD.ADMIN_MAIL)
     void update() throws Exception {
-        Restaurant updated = new Restaurant(EXIST_ID, "Updatable Restaurant");
+        Restaurant updated = of(EXIST_ID, "Updatable Restaurant");
         perform(MockMvcRequestBuilders.put(REST_URL + EXIST_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(updated)))
@@ -73,7 +74,7 @@ class AdminRestaurantControllerTest extends BaseControllerTest {
     @Test
     @WithUserDetails(value = UserTD.ADMIN_MAIL)
     void updateInvalid() throws Exception {
-        Restaurant invalid = new Restaurant(EXIST_ID, "");
+        Restaurant invalid = of(EXIST_ID, "");
         perform(MockMvcRequestBuilders.put(REST_URL + EXIST_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(invalid)))
@@ -84,7 +85,7 @@ class AdminRestaurantControllerTest extends BaseControllerTest {
     @Test
     @WithUserDetails(value = UserTD.ADMIN_MAIL)
     void updateHtmlUnsafe() throws Exception {
-        Restaurant updated = new Restaurant(EXIST_ID, "Updatable Restaurant");
+        Restaurant updated = of(EXIST_ID, "Updatable Restaurant");
         updated.setName("<script>alert(123)</script>");
         perform(MockMvcRequestBuilders.put(REST_URL + EXIST_ID)
                 .contentType(MediaType.APPLICATION_JSON)

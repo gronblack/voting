@@ -1,6 +1,7 @@
 package com.github.gronblack.voting.web.controller.restaurant;
 
 import io.swagger.v3.oas.annotations.Operation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = RegularRestaurantController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+@Slf4j
 public class RegularRestaurantController extends BaseRestaurantController {
     public static final String REST_URL = "/api/restaurants";
 

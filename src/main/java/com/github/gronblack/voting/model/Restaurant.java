@@ -1,7 +1,6 @@
 package com.github.gronblack.voting.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,7 +8,10 @@ import lombok.ToString;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+import javax.persistence.Table;
 import java.util.List;
 import java.util.Set;
 
@@ -29,8 +31,8 @@ public class Restaurant extends NamedEntity {
 
     @OneToMany(mappedBy = "restaurant")
     @OrderBy("name DESC")
-    @JsonManagedReference
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
     private Set<Dish> dishes;
 
     @OneToMany(mappedBy = "restaurant")

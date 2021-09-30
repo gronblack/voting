@@ -26,6 +26,10 @@ public class DishService {
         this.menuRepository = menuRepository;
     }
 
+    public List<Dish> getByRestaurantId(Integer restaurantId) {
+        return repository.getByRestaurantId(restaurantId);
+    }
+
     public Dish getById(int id) {
         return repository.findById(id).orElseThrow(ErrorUtil.notFound(Dish.class, id));
     }
@@ -42,7 +46,7 @@ public class DishService {
 
     public void removeAllDishesFromMenu(int restaurantId) {
         // https://www.baeldung.com/convert-array-to-list-and-list-to-array#1-using-plain-java
-        removeFromMenu(restaurantId, repository.getAllByRestaurantId(restaurantId).toArray(new Dish[0]));
+        removeFromMenu(restaurantId, repository.getByRestaurantId(restaurantId).toArray(new Dish[0]));
     }
 
     public void removeFromMenu(int restaurantId, Dish... dishes) {

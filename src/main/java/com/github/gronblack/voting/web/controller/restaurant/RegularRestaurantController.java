@@ -39,11 +39,4 @@ public class RegularRestaurantController extends BaseRestaurantController {
         log.info("get {}", id);
         return ResponseEntity.of(repository.findById(id));
     }
-
-    @GetMapping("/{id}/with-dishes")
-    @Operation(summary = "Get by id with dishes", tags = "restaurants")
-    public ResponseEntity<Restaurant> getWithDishes(@PathVariable int id) {
-        log.info("getWithDishes {}", id);
-        return ResponseEntity.of(repository.getByIdLoadDishes(id));
-    }
 }

@@ -22,8 +22,8 @@ public class VoteTD {
     public static final Vote userVote4 = new Vote(4, LocalDate.of(2020, Month.MAY, 21), UserTD.user, RestaurantTD.restaurantNoma);
     public static final Vote userVote6Today = new Vote(USER_VOTE_TODAY_ID, currentDate(), UserTD.user, restaurantMirazur);
 
-    public static final String ratingTodayJSONString = "[{\"record\":{\"id\":2,\"name\":\"Mirazur\",\"dishes\":null},\"rating\":2}]";
-    public static final String ratingOnDateJSONString = "[{\"record\":{\"id\":1,\"name\":\"Noma\",\"dishes\":null},\"rating\":2},{\"record\":{\"id\":3,\"name\":\"Asador\",\"dishes\":null},\"rating\":1}]";
+    public static final String ratingTodayJSONString = "[{\"record\":{\"id\":2,\"name\":\"Mirazur\"},\"rating\":2}]";
+    public static final String ratingOnDateJSONString = "[{\"record\":{\"id\":1,\"name\":\"Noma\"},\"rating\":2},{\"record\":{\"id\":3,\"name\":\"Asador\"},\"rating\":1}]";
 
     public static Clock voteBorderClock(boolean before) {
         LocalTime time = ValidationUtil.VOTE_TIME_BORDER.minusMinutes(before ? 1 : 0);

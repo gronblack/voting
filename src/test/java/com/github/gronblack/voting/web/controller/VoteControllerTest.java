@@ -1,5 +1,11 @@
-package com.github.gronblack.voting.web;
+package com.github.gronblack.voting.web.controller;
 
+import com.github.gronblack.voting.model.Vote;
+import com.github.gronblack.voting.repository.VoteRepository;
+import com.github.gronblack.voting.util.DateTimeUtil;
+import com.github.gronblack.voting.web.BaseControllerTest;
+import com.github.gronblack.voting.web.GlobalExceptionHandler;
+import com.github.gronblack.voting.web.testdata.VoteTD;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -10,25 +16,21 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import com.github.gronblack.voting.model.Vote;
-import com.github.gronblack.voting.repository.VoteRepository;
-import com.github.gronblack.voting.util.DateTimeUtil;
-import com.github.gronblack.voting.web.controller.VoteController;
-import com.github.gronblack.voting.web.testdata.VoteTD;
 
 import java.util.List;
 
+import static com.github.gronblack.voting.web.testdata.CommonTD.NOT_FOUND_ID;
+import static com.github.gronblack.voting.web.testdata.RestaurantTD.RESTAURANT_NOMA_ID;
+import static com.github.gronblack.voting.web.testdata.RestaurantTD.restaurantNoma;
+import static com.github.gronblack.voting.web.testdata.UserTD.*;
+import static com.github.gronblack.voting.web.testdata.VoteTD.copy;
+import static com.github.gronblack.voting.web.testdata.VoteTD.*;
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static com.github.gronblack.voting.web.testdata.CommonTD.NOT_FOUND_ID;
-import static com.github.gronblack.voting.web.testdata.RestaurantTD.RESTAURANT_NOMA_ID;
-import static com.github.gronblack.voting.web.testdata.RestaurantTD.restaurantNoma;
-import static com.github.gronblack.voting.web.testdata.UserTD.*;
-import static com.github.gronblack.voting.web.testdata.VoteTD.*;
 
 class VoteControllerTest extends BaseControllerTest {
     private static final String REST_URL = VoteController.REST_URL + '/';

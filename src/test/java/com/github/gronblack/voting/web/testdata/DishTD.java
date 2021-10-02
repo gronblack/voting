@@ -9,6 +9,7 @@ public class DishTD {
     public static final MatcherFactory.Matcher<Dish> DISH_MATCHER = MatcherFactory.usingEqualsComparator(Dish.class);
     public static final int DISH_1_ID = 1;
     public static final int DISH_9_ID = 9;
+    public static final int RESTAURANT_WITHOUT_DISH_1_ID = 2;
 
     private static final Restaurant restaurantNoma = new Restaurant(1, "Noma", null);
     private static final Restaurant restaurantMirazur = new Restaurant(2, "Mirazur", null);
@@ -25,7 +26,11 @@ public class DishTD {
     public static final Dish dish9 = new Dish(9, "Chocolate ice cream", 50, restaurantAsador);
 
     public static DishTo fromDish(Dish dish) {
-        return new DishTo(dish.getId(), dish.getName(), dish.getPrice(), dish.getRestaurant().getId());
+        return fromDish(dish, dish.getRestaurant().getId());
+    }
+
+    public static DishTo fromDish(Dish dish, Integer restaurantId) {
+        return new DishTo(dish.getId(), dish.getName(), dish.getPrice(), restaurantId);
     }
 
     public static Dish copy(Dish dish) {

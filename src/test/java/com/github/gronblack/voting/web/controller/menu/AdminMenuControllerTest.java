@@ -132,21 +132,6 @@ class AdminMenuControllerTest extends BaseControllerTest {
 
     @Test
     @WithUserDetails(value = UserTD.ADMIN_MAIL)
-    void addNewDish() throws Exception {
-        Menu menu = MenuTD.copy(MenuTD.menuNomaTodayID2WithDishes);
-        Dish newDish = new Dish(null, "New Dish", 52.5, RestaurantTD.restaurantNoma);
-        menu.addDishes(newDish);
-        DishTo newTo = DishTD.fromDish(newDish);
-
-        perform(MockMvcRequestBuilders.patch(REST_URL + MenuTD.MENU_NOMA_TODAY_ID + "/add")
-                .contentType(MediaType.APPLICATION_JSON).content(JsonUtil.writeValue(newTo)))
-                .andDo(print())
-                .andExpect(status().isNoContent());
-        MenuTD.MENU_MATCHER.assertMatch(repository.getById(MenuTD.MENU_NOMA_TODAY_ID), menu);
-    }
-
-    @Test
-    @WithUserDetails(value = UserTD.ADMIN_MAIL)
     void removeDish() throws Exception {
         Menu menu = MenuTD.copy(MenuTD.menuNomaTodayID2WithDishes);
         menu.removeDishes(MenuTD.dishNoma1);

@@ -1,5 +1,6 @@
 package com.github.gronblack.voting.service;
 
+import com.github.gronblack.voting.error.IllegalRequestDataException;
 import com.github.gronblack.voting.model.Menu;
 import com.github.gronblack.voting.util.ErrorUtil;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import com.github.gronblack.voting.repository.RestaurantRepository;
 import com.github.gronblack.voting.to.DishTo;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DishService {
@@ -30,18 +32,18 @@ public class DishService {
         return repository.getByRestaurantId(restaurantId);
     }
 
-    public Dish getById(int id) {
-        return repository.findById(id).orElseThrow(ErrorUtil.notFound(Dish.class, id));
+    public Optional<Dish> findById(int id) {
+        return repository.findById(id);
     }
 
-    public Dish save(Dish dish) {
+    public Dish saveFromTo(DishTo to) {
+        Dish dish = new Dish(to.getId(), to.getName(), to.getPrice(), restRepository.getById(to.getRestaurant_id()));
         return repository.save(dish);
     }
 
-    public Dish fromTo(DishTo to) {
-        Restaurant restaurant = restRepository.findById(to.getRestaurant_id())
-                .orElseThrow(ErrorUtil.notFound(Restaurant.class, to.getRestaurant_id()));
-        return new Dish(to.getId(), to.getName(), to.getPrice(), restaurant);
+    public Dish checkBelong(int id, int restaurantId) {
+        return repository.get(id, restaurantId).orElseThrow(
+                () -> new IllegalRequestDataException("Dish id=" + id + " doesn't belong to Restaurant id=" + restaurantId));
     }
 
     public void removeAllDishesFromMenu(int restaurantId) {

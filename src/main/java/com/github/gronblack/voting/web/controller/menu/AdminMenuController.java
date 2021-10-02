@@ -1,5 +1,9 @@
 package com.github.gronblack.voting.web.controller.menu;
 
+import com.github.gronblack.voting.model.Dish;
+import com.github.gronblack.voting.model.Menu;
+import com.github.gronblack.voting.to.DishTo;
+import com.github.gronblack.voting.to.MenuTo;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -9,10 +13,6 @@ import org.springframework.lang.Nullable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import com.github.gronblack.voting.model.Dish;
-import com.github.gronblack.voting.model.Menu;
-import com.github.gronblack.voting.to.DishTo;
-import com.github.gronblack.voting.to.MenuTo;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -50,21 +50,13 @@ public class AdminMenuController extends BaseMenuController {
     @PatchMapping("/{id}/add")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Transactional
-    @Operation(summary = "Add dish to menu, new (with TO) or existing (with 'dish' param)", tags = "menu")
-    public void addDish(@PathVariable int id, @Valid @RequestBody @Nullable DishTo to, @RequestParam @Nullable Integer dish) {
+    @Operation(summary = "Add dish to menu", tags = "menu")
+    public void addDish(@PathVariable int id, @RequestParam int dish) {
         Menu menu = getByIdLoad(id);
-        if (dish == null) {
-            log.info("add new dish to menu {}", id);
-            checkNew(to);
-            Dish forAdd = dishService.fromTo(to);
-            checkBelongToRestaurant(menu, forAdd);
-            menu.addDishes(dishService.save(forAdd));
-        } else {
-            log.info("add existing dish {} to menu {}", dish, id);
-            Dish forAdd = dishService.getById(dish);
-            checkBelongToRestaurant(menu, forAdd);
-            menu.addDishes(forAdd);
-        }
+        log.info("add dish {} to menu {}", dish, id);
+        Dish forAdd = dishService.checkBelong(dish, menu.getRestaurant().getId());
+        checkBelongToRestaurant(menu, forAdd);
+        menu.addDishes(forAdd);
     }
 
     @PatchMapping("/{id}/remove")
@@ -74,7 +66,7 @@ public class AdminMenuController extends BaseMenuController {
     public void removeDish(@PathVariable int id, @RequestParam int dish) {
         log.info("removeDish from menu {}", id);
         Menu menu = getByIdLoad(id);
-        Dish forRemove = dishService.getById(dish);
+        Dish forRemove = dishService.checkBelong(dish, menu.getRestaurant().getId());
         checkBelongToMenu(menu, forRemove);
         menu.removeDishes(forRemove);
     }

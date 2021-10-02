@@ -36,12 +36,20 @@ public class AdminDishController {
         return service.getByRestaurantId(restaurantId);
     }
 
+    @GetMapping(value = "/{id}")
+    @Operation(summary = "Get by id", tags = "dishes")
+    public ResponseEntity<Dish> get(@PathVariable int id) {
+        log.info("get {}", id);
+        return ResponseEntity.of(service.findById(id));
+    }
+
+
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Create", tags = "dishes")
     public ResponseEntity<Dish> createWithLocation(@Valid @RequestBody DishTo to) {
-        log.info("create {}", to);
+        log.info("create from TO {}", to);
         checkNew(to);
-        Dish created = service.save(service.fromTo(to));
+        Dish created = service.saveFromTo(to);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(created.getId()).toUri();
@@ -52,9 +60,10 @@ public class AdminDishController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "Update", tags = "dishes")
     public void update(@Valid @RequestBody DishTo to, @PathVariable int id) {
-        log.info("update dish from TO {}", to);
+        log.info("update from TO {}", to);
         assureIdConsistent(to, id);
-        service.save(service.fromTo(to));
+        service.checkBelong(id, to.getRestaurant_id());
+        service.saveFromTo(to);
     }
 
     @DeleteMapping("/{id}")

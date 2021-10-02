@@ -1,6 +1,8 @@
 package com.github.gronblack.voting.model;
 
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
@@ -20,6 +22,7 @@ public class Menu extends NamedEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Restaurant restaurant;
 
     @ManyToMany

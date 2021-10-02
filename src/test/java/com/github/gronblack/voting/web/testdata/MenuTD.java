@@ -20,9 +20,9 @@ public class MenuTD {
     public static final int DISH_NOMA_FREE_ID = 2;
     public static final int DISH_ASADOR_ID = 9;
 
-    public static final Restaurant restaurantNoma = new Restaurant(1, "Noma", null);
-    public static final Restaurant restaurantMirazur = new Restaurant(2, "Mirazur", null);
-    public static final Restaurant restaurantAsador = new Restaurant(3, "Asador", null);
+    public static final Restaurant restaurantNoma = new Restaurant(1, "Noma");
+    public static final Restaurant restaurantMirazur = new Restaurant(2, "Mirazur");
+    public static final Restaurant restaurantAsador = new Restaurant(3, "Asador");
 
     public static final Dish dishNoma1 = new Dish(1, "Beef Wellington", 150.25, restaurantNoma);
     public static final Dish dishNoma3 = new Dish(3, "Peking duck", 110, restaurantNoma);

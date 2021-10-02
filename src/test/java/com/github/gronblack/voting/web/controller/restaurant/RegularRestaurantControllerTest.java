@@ -27,15 +27,6 @@ class RegularRestaurantControllerTest extends BaseControllerTest {
 
     @Test
     @WithUserDetails(value = UserTD.USER_MAIL)
-    void getAllWithDishes() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + "with-dishes"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(RestaurantTD.RESTAURANT_MATCHER.contentJson(RestaurantTD.restaurantAsadorWithDishes, RestaurantTD.restaurantMirazurWithDishes, RestaurantTD.restaurantNomaWithDishes));
-    }
-
-    @Test
-    @WithUserDetails(value = UserTD.USER_MAIL)
     void get() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_URL + RestaurantTD.RESTAURANT_NOMA_ID))
                 .andDo(print())

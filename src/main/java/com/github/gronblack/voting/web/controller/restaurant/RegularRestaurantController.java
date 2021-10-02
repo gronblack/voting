@@ -26,13 +26,6 @@ public class RegularRestaurantController extends BaseRestaurantController {
         return repository.findAll(Sort.by(Sort.Direction.ASC, "name"));
     }
 
-    @GetMapping("/with-dishes")
-    @Operation(summary = "Get all with dishes", tags = "restaurants")
-    public List<Restaurant> getAllWithDishes() {
-        log.info("getAllWithDishes");
-        return repository.getAllLoadDishes();
-    }
-
     @GetMapping("/{id}")
     @Operation(summary = "Get by id", tags = "restaurants")
     public ResponseEntity<Restaurant> get(@PathVariable int id) {

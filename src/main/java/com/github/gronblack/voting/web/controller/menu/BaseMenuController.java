@@ -39,7 +39,7 @@ public abstract class BaseMenuController {
 
     protected static void checkBelongToRestaurant(Menu menu, Dish dish) {
         if (!menu.getRestaurant().equals(dish.getRestaurant())) {
-            throw new IllegalRequestDataException(String.format("Dish [id=%s] doesn't belong to Restaurant [id=%s]", dish.getId(), dish.getRestaurant().getId()));
+            throw new IllegalRequestDataException(String.format("Dish [id=%s] doesn't belong to Restaurant [id=%s]", dish.getId(), menu.getRestaurant().getId()));
         }
     }
 

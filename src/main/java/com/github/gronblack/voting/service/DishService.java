@@ -1,17 +1,15 @@
 package com.github.gronblack.voting.service;
 
 import com.github.gronblack.voting.error.IllegalRequestDataException;
-import com.github.gronblack.voting.model.Menu;
-import com.github.gronblack.voting.util.ErrorUtil;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import com.github.gronblack.voting.model.Dish;
-import com.github.gronblack.voting.model.Restaurant;
+import com.github.gronblack.voting.model.Menu;
 import com.github.gronblack.voting.repository.DishRepository;
 import com.github.gronblack.voting.repository.MenuRepository;
 import com.github.gronblack.voting.repository.RestaurantRepository;
 import com.github.gronblack.voting.to.DishTo;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -43,7 +41,7 @@ public class DishService {
 
     public Dish checkBelong(int id, int restaurantId) {
         return repository.get(id, restaurantId).orElseThrow(
-                () -> new IllegalRequestDataException("Dish id=" + id + " doesn't belong to Restaurant id=" + restaurantId));
+                () -> new IllegalRequestDataException(String.format("Dish [id=%s] doesn't belong to Restaurant [id=%s]", id, restaurantId)));
     }
 
     public void removeAllDishesFromMenu(int restaurantId) {

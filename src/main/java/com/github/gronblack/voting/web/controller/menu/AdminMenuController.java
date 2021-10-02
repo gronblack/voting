@@ -2,14 +2,12 @@ package com.github.gronblack.voting.web.controller.menu;
 
 import com.github.gronblack.voting.model.Dish;
 import com.github.gronblack.voting.model.Menu;
-import com.github.gronblack.voting.to.DishTo;
 import com.github.gronblack.voting.to.MenuTo;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.lang.Nullable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -24,7 +22,7 @@ import static com.github.gronblack.voting.util.validation.ValidationUtil.checkNe
 @RequestMapping(value = AdminMenuController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @Slf4j
 public class AdminMenuController extends BaseMenuController {
-    public static final String REST_URL = "/api/admin/menu";
+    public static final String REST_URL = "/api/admin/menus";
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Create new", tags = "menu")

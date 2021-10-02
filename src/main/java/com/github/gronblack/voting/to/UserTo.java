@@ -23,7 +23,7 @@ public class UserTo extends NamedTo implements HasIdAndEmail, Serializable {
     @Email
     @NotBlank
     @Size(max = 100)
-    @NoHtml // https://stackoverflow.com/questions/17480809
+    @NoHtml
     String email;
 
     @NotBlank

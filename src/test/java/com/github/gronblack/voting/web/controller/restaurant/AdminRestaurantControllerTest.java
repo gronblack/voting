@@ -36,7 +36,7 @@ class AdminRestaurantControllerTest extends BaseControllerTest {
     @Test
     @WithUserDetails(value = UserTD.ADMIN_MAIL)
     void createWithLocation() throws Exception {
-        Restaurant nr = of("Test Restaurant");
+        Restaurant nr = of(null,"Test Restaurant");
         ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(nr)))
@@ -51,7 +51,8 @@ class AdminRestaurantControllerTest extends BaseControllerTest {
     @Test
     @WithUserDetails(value = UserTD.ADMIN_MAIL)
     void createInvalid() throws Exception {
-        Restaurant invalid = new Restaurant(null, null, null);
+        //Restaurant invalid = new Restaurant(null, null, null);
+        Restaurant invalid = new Restaurant(null, null);
         perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(invalid)))

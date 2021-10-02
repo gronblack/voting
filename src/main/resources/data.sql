@@ -48,7 +48,7 @@ VALUES (1, 1),  /* Noma lunch 1, Beef Wellington */
        (6, 8),  /* Asador lunch 2, Hummus */
        (6, 9);  /* Asador lunch 2, Chocolate ice cream */
 
-INSERT INTO vote (date, user_id, restaurant_id)
+INSERT INTO vote (actual_date, user_id, restaurant_id)
 VALUES ('2020-05-20', 1, 1),
        ('2020-05-20', 2, 1),
        ('2020-05-20', 3, 3),

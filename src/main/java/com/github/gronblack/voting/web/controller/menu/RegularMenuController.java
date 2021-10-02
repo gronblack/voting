@@ -18,7 +18,7 @@ import static com.github.gronblack.voting.util.DateTimeUtil.currentDate;
 @RequestMapping(value = RegularMenuController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @Slf4j
 public class RegularMenuController extends BaseMenuController {
-    public static final String REST_URL = "/api/menu";
+    public static final String REST_URL = "/api/menus";
 
     @GetMapping
     @Operation(summary = "Get all with restaurants between dates (default - for current date)", tags = "menu")

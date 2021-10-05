@@ -15,9 +15,9 @@ import java.util.List;
 import static com.github.gronblack.voting.util.DateTimeUtil.currentDate;
 
 @RestController
-@RequestMapping(value = RegularMenuController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = MenuController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @Slf4j
-public class RegularMenuController extends BaseMenuController {
+public class MenuController extends BaseMenuController {
     public static final String REST_URL = "/api/menus";
 
     @GetMapping

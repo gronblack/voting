@@ -27,10 +27,10 @@ import static com.github.gronblack.voting.util.validation.ValidationUtil.assureI
 import static com.github.gronblack.voting.util.validation.ValidationUtil.checkNew;
 
 @RestController
-@RequestMapping(value = RegularUserController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = UserController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @CacheConfig(cacheNames = "users")
 @Slf4j
-public class RegularUserController extends BaseUserController {
+public class UserController extends BaseUserController {
     public static final String REST_URL = "/api/account";
 
     @GetMapping

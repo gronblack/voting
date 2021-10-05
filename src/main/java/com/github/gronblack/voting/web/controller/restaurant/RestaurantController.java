@@ -14,9 +14,9 @@ import com.github.gronblack.voting.model.Restaurant;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = RegularRestaurantController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = RestaurantController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @Slf4j
-public class RegularRestaurantController extends BaseRestaurantController {
+public class RestaurantController extends BaseRestaurantController {
     public static final String REST_URL = "/api/restaurants";
 
     @GetMapping

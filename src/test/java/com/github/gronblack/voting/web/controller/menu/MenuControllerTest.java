@@ -14,8 +14,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static com.github.gronblack.voting.util.DateTimeUtil.currentDate;
 import static com.github.gronblack.voting.web.testdata.CommonTD.NOT_FOUND_ID;
 
-class RegularMenuControllerTest extends BaseControllerTest {
-    static final String REST_URL = RegularMenuController.REST_URL + "/";
+class MenuControllerTest extends BaseControllerTest {
+    static final String REST_URL = MenuController.REST_URL + "/";
 
     @Test
     @WithUserDetails(value = UserTD.USER_MAIL)

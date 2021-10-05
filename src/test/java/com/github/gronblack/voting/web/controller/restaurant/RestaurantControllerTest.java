@@ -13,8 +13,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class RegularRestaurantControllerTest extends BaseControllerTest {
-    static final String REST_URL = RegularRestaurantController.REST_URL + "/";
+class RestaurantControllerTest extends BaseControllerTest {
+    static final String REST_URL = RestaurantController.REST_URL + "/";
 
     @Test
     @WithUserDetails(value = UserTD.USER_MAIL)

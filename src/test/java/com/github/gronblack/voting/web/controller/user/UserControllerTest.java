@@ -21,14 +21,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class RegularUserControllerTest extends BaseControllerTest {
+class UserControllerTest extends BaseControllerTest {
     @Autowired
     private UserRepository userRepository;
 
     @Test
     @WithUserDetails(value = UserTD.USER_MAIL)
     void get() throws Exception {
-        perform(MockMvcRequestBuilders.get(RegularUserController.REST_URL))
+        perform(MockMvcRequestBuilders.get(UserController.REST_URL))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(UserTD.USER_MATCHER.contentJson(UserTD.user));
@@ -36,14 +36,14 @@ class RegularUserControllerTest extends BaseControllerTest {
 
     @Test
     void getUnAuth() throws Exception {
-        perform(MockMvcRequestBuilders.get(RegularUserController.REST_URL))
+        perform(MockMvcRequestBuilders.get(UserController.REST_URL))
                 .andExpect(status().isUnauthorized());
     }
 
     @Test
     @WithUserDetails(value = UserTD.USER_MAIL)
     void delete() throws Exception {
-        perform(MockMvcRequestBuilders.delete(RegularUserController.REST_URL))
+        perform(MockMvcRequestBuilders.delete(UserController.REST_URL))
                 .andExpect(status().isNoContent());
         UserTD.USER_MATCHER.assertMatch(userRepository.findAll(), UserTD.admin, UserTD.userId3);
     }
@@ -52,7 +52,7 @@ class RegularUserControllerTest extends BaseControllerTest {
     void register() throws Exception {
         UserTo newTo = new UserTo(null, "newName", "newemail@ya.ru", "newPassword");
         User newUser = UserUtil.createNewFromTo(newTo);
-        ResultActions action = perform(MockMvcRequestBuilders.post(RegularUserController.REST_URL)
+        ResultActions action = perform(MockMvcRequestBuilders.post(UserController.REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(newTo)))
                 .andDo(print())
@@ -68,7 +68,7 @@ class RegularUserControllerTest extends BaseControllerTest {
     @Test
     void registerInvalid() throws Exception {
         UserTo newTo = new UserTo(null, null, null, null);
-        perform(MockMvcRequestBuilders.post(RegularUserController.REST_URL)
+        perform(MockMvcRequestBuilders.post(UserController.REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(newTo)))
                 .andDo(print())
@@ -79,7 +79,7 @@ class RegularUserControllerTest extends BaseControllerTest {
     @WithUserDetails(value = UserTD.USER_MAIL)
     void update() throws Exception {
         UserTo updatedTo = new UserTo(null, "newName", UserTD.USER_MAIL, "newPassword");
-        perform(MockMvcRequestBuilders.put(RegularUserController.REST_URL).contentType(MediaType.APPLICATION_JSON)
+        perform(MockMvcRequestBuilders.put(UserController.REST_URL).contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(updatedTo)))
                 .andDo(print())
                 .andExpect(status().isNoContent());
@@ -91,7 +91,7 @@ class RegularUserControllerTest extends BaseControllerTest {
     @WithUserDetails(value = UserTD.USER_MAIL)
     void updateInvalid() throws Exception {
         UserTo updatedTo = new UserTo(null, null, "password", null);
-        perform(MockMvcRequestBuilders.put(RegularUserController.REST_URL)
+        perform(MockMvcRequestBuilders.put(UserController.REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(updatedTo)))
                 .andDo(print())
@@ -102,7 +102,7 @@ class RegularUserControllerTest extends BaseControllerTest {
     @WithUserDetails(value = UserTD.USER_MAIL)
     void updateDuplicate() throws Exception {
         UserTo updatedTo = new UserTo(null, "newName", UserTD.ADMIN_MAIL, "newPassword");
-        perform(MockMvcRequestBuilders.put(RegularUserController.REST_URL).contentType(MediaType.APPLICATION_JSON)
+        perform(MockMvcRequestBuilders.put(UserController.REST_URL).contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(updatedTo)))
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity())

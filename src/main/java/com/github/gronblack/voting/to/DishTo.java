@@ -21,11 +21,11 @@ public class DishTo extends NamedTo implements Serializable {
     double price;
 
     @PositiveOrZero
-    Integer restaurant_id;
+    int restaurantId;
 
-    public DishTo(Integer id, String name, double price, int restaurant_id) {
+    public DishTo(Integer id, String name, double price, int restaurantId) {
         super(id, name);
         this.price = price;
-        this.restaurant_id = restaurant_id;
+        this.restaurantId = restaurantId;
     }
 }

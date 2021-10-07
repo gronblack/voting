@@ -35,7 +35,7 @@ public class DishService {
     }
 
     public Dish saveFromTo(DishTo to) {
-        Dish dish = new Dish(to.getId(), to.getName(), to.getPrice(), restRepository.getById(to.getRestaurant_id()));
+        Dish dish = new Dish(to.getId(), to.getName(), to.getPrice(), restRepository.getById(to.getRestaurantId()));
         return repository.save(dish);
     }
 

@@ -23,7 +23,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString(callSuper = true, exclude = {"password", "votes"})
+@ToString(callSuper = true, exclude = "password")
 public class User extends NamedEntity implements HasIdAndEmail {
 
     @Column(name = "email", nullable = false, unique = true)

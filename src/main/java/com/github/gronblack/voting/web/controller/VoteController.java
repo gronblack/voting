@@ -2,10 +2,10 @@ package com.github.gronblack.voting.web.controller;
 
 import com.github.gronblack.voting.error.NotFoundException;
 import com.github.gronblack.voting.model.Rating;
-import com.github.gronblack.voting.model.Restaurant;
 import com.github.gronblack.voting.model.Vote;
 import com.github.gronblack.voting.repository.VoteRepository;
 import com.github.gronblack.voting.service.VoteService;
+import com.github.gronblack.voting.to.VoteTo;
 import com.github.gronblack.voting.web.AuthUser;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
@@ -37,65 +37,38 @@ public class VoteController {
     private final VoteService service;
 
     @GetMapping
-    @Operation(summary = "Get all by filter (default - for current date)", tags = "votes")
-    public List<Vote> getByFilter(@RequestParam @Nullable Integer user,
-                                  @RequestParam @Nullable Integer restaurant,
-                                  @RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-                                  @RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
-        log.info("getByFilter: dates({} - {}), user {}, restaurant {}", startDate, endDate, user, restaurant);
-        return repository.getByFilterLoadUser(user, restaurant, startDate, endDate);
-    }
-
-    @GetMapping("/{id}")
-    @Operation(summary = "Get by id", tags = "votes")
-    public ResponseEntity<Vote> get(@PathVariable int id) {
-        log.info("get {}", id);
-        return ResponseEntity.of(repository.findById(id));
-    }
-
-    @GetMapping("/my")
-    @Operation(summary = "Get votes for authorized user between dates (default - for current date)", tags = "votes")
-    public List<Vote> getMyBetween(@AuthenticationPrincipal AuthUser authUser,
-                                   @RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-                                   @RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+    @Operation(summary = "Get votes for authorized user by filter (default - for current date)", tags = "votes")
+    public List<VoteTo> getByFilter(@AuthenticationPrincipal AuthUser authUser,
+                                    @RequestParam @Nullable Integer restaurantId,
+                                    @RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+                                    @RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
         int userId = authUser.id();
-        if (startDate == null & endDate == null) {
+        if (startDate == null & endDate == null & restaurantId == null) {
             startDate = currentDate();
             endDate = currentDate();
         }
-        log.info("getBetween dates({} - {}) for user {}", startDate, endDate, userId);
-        return repository.getByUserBetween(userId, startDate, endDate);
+        log.info("getByFilter: user {}, restaurant {}, dates({} - {})", userId, restaurantId, startDate, endDate);
+        return repository.getByFilterForUser(userId, restaurantId, startDate, endDate);
     }
 
     @GetMapping("/rating")
     @Operation(summary = "Get restaurants rating on date (default - for current date)", tags = "votes")
-    public List<Rating<Restaurant>> getRating(@RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+    public List<Rating> getRating(@RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         if (date == null) {
             log.info("getRating by current date");
         } else {
             log.info("getRating by date {}", date);
         }
-        return repository.getRatingOnDate(date);
-    }
-
-    @DeleteMapping
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @Operation(summary = "Delete vote for authorized user for current date", tags = "votes")
-    public void delete(@AuthenticationPrincipal AuthUser authUser) {
-        log.info("delete vote of user {}", authUser.id());
-        checkTime();
-        Vote vote = repository.getByUserOnDate(authUser.id(), currentDate())
-                .orElseThrow(() -> new NotFoundException(String.format("Not found Vote today for User[%s]", authUser.getUser().getEmail())));
-        repository.delete(vote);
+        return repository.getRatingByDate(date);
     }
 
     // https://stackoverflow.com/a/55653219/16899097
     @PostMapping
     @Operation(summary = "Create vote for authorized user", tags = "votes")
-    public ResponseEntity<Vote> createWithLocation(@AuthenticationPrincipal AuthUser authUser, @RequestParam int restaurant) {
-        log.info("create vote for user {}, restaurant {}", authUser.id(), restaurant);
+    public ResponseEntity<Vote> createWithLocation(@AuthenticationPrincipal AuthUser authUser, @RequestParam int restaurantId) {
+        log.info("create vote for user {}, restaurant {}", authUser.id(), restaurantId);
         Vote v = new Vote(currentDate(), authUser.getUser());
-        Vote created = service.save(v, restaurant);
+        Vote created = service.save(v, restaurantId);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(created.getId()).toUri();
@@ -105,12 +78,12 @@ public class VoteController {
     @PutMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "Update vote for authorized user", tags = "votes")
-    public void update(@AuthenticationPrincipal AuthUser authUser, @RequestParam int restaurant) {
+    public void update(@AuthenticationPrincipal AuthUser authUser, @RequestParam int restaurantId) {
         int userId = authUser.id();
-        log.info("update vote for user {}, restaurant {}", userId, restaurant);
+        log.info("update vote for user {}, restaurant {}", userId, restaurantId);
         checkTime();
-        Vote v = repository.getByUserOnDate(userId, currentDate())
+        Vote v = repository.getByUserAndDate(userId, currentDate())
                 .orElseThrow(() -> new NotFoundException(String.format("Not found Vote today for User[%s]", authUser.getUser().getEmail())));
-        service.save(v, restaurant);
+        service.save(v, restaurantId);
     }
 }

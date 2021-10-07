@@ -62,7 +62,7 @@ public class AdminDishController {
     public void update(@Valid @RequestBody DishTo to, @PathVariable int id) {
         log.info("update from TO {}", to);
         assureIdConsistent(to, id);
-        service.checkBelong(id, to.getRestaurant_id());
+        service.checkBelong(id, to.getRestaurantId());
         service.saveFromTo(to);
     }
 

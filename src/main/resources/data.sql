@@ -54,9 +54,9 @@ VALUES ('2020-05-20', 1, 1),
        ('2020-05-20', 3, 3),
        ('2020-05-21', 1, 1),
        ('2020-05-21', 2, 1),
-       (CURRENT_DATE, 1, 2),
-       (CURRENT_DATE, 2, 2),
+       (DATEADD('DAY', -2, CURRENT_DATE), 1, 1),
+       (DATEADD('DAY', -2, CURRENT_DATE), 2, 2),
        (DATEADD('DAY', -1, CURRENT_DATE), 1, 3),
        (DATEADD('DAY', -1, CURRENT_DATE), 2, 1),
-       (DATEADD('DAY', -2, CURRENT_DATE), 1, 1),
-       (DATEADD('DAY', -2, CURRENT_DATE), 2, 2);
+       (CURRENT_DATE, 1, 2),
+       (CURRENT_DATE, 2, 2);

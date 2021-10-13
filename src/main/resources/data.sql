@@ -9,10 +9,10 @@ VALUES ('USER', 1),
        ('USER', 2),
        ('USER', 3);
 
-INSERT INTO restaurant (name)
-VALUES ('Noma'),
-       ('Mirazur'),
-       ('Asador');
+INSERT INTO restaurant (name, phone)
+VALUES ('Noma', '+45-3296-3297'),
+       ('Mirazur', '+33-492-41-8686'),
+       ('Asador', '+7-495-953-1564');
 
 
 INSERT INTO dish (name, price, restaurant_id)

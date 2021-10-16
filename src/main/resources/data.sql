@@ -14,7 +14,6 @@ VALUES ('Noma', '+45-3296-3297'),
        ('Mirazur', '+33-492-41-8686'),
        ('Asador', '+7-495-953-1564');
 
-
 INSERT INTO dish (name, price, restaurant_id)
 VALUES ('Beef Wellington', 150.25, 1),
        ('Onion soup', 80.50, 1),
@@ -26,27 +25,41 @@ VALUES ('Beef Wellington', 150.25, 1),
        ('Hummus', 80, 3),
        ('Chocolate ice cream', 50, 3);
 
-INSERT INTO menu (name, registered, restaurant_id)
-VALUES ('Noma lunch 1', DATEADD('DAY', -1, CURRENT_DATE), 1),
-       ('Noma lunch 2', CURRENT_DATE, 1),
-       ('Mirazur lunch 1', DATEADD('DAY', -1, CURRENT_DATE), 2),
-       ('Mirazur lunch 2', CURRENT_DATE, 2),
-       ('Asador lunch 1', DATEADD('DAY', -1, CURRENT_DATE), 3),
-       ('Asador lunch 2', CURRENT_DATE, 3);
+-- INSERT INTO menu (name, actual_date, restaurant_id)
+-- VALUES ('Noma lunch 1', DATEADD('DAY', -1, CURRENT_DATE), 1),
+--        ('Noma lunch 2', CURRENT_DATE, 1),
+--        ('Mirazur lunch 1', DATEADD('DAY', -1, CURRENT_DATE), 2),
+--        ('Mirazur lunch 2', CURRENT_DATE, 2),
+--        ('Asador lunch 1', DATEADD('DAY', -1, CURRENT_DATE), 3),
+--        ('Asador lunch 2', CURRENT_DATE, 3);
 
-INSERT INTO menu_dish (menu_id, dish_id)
-VALUES (1, 1),  /* Noma lunch 1, Beef Wellington */
-       (1, 2),  /* Noma lunch 1, Onion soup */
-       (2, 1),  /* Noma lunch 2, Beef Wellington */
-       (2, 3),  /* Noma lunch 2, Peking duck */
-       (3, 4),  /* Mirazur lunch 1, Chicken salad */
-       (3, 5),  /* Mirazur lunch 1, Caesar salad */
-       (4, 5),  /* Mirazur lunch 2, Caesar salad */
-       (4, 6),  /* Mirazur lunch 2, Potato frittata */
-       (5, 7),  /* Asador lunch 1, Fish pie */
-       (5, 8),  /* Asador lunch 1, Hummus */
-       (6, 8),  /* Asador lunch 2, Hummus */
-       (6, 9);  /* Asador lunch 2, Chocolate ice cream */
+INSERT INTO menu_item (actual_date, dish_id)
+VALUES (DATEADD('DAY', -1, CURRENT_DATE), 1),
+       (DATEADD('DAY', -1, CURRENT_DATE), 2),
+       (CURRENT_DATE, 1),
+       (CURRENT_DATE, 3),
+       (DATEADD('DAY', -1, CURRENT_DATE), 4),
+       (DATEADD('DAY', -1, CURRENT_DATE), 5),
+       (CURRENT_DATE, 5),
+       (CURRENT_DATE, 6),
+       (DATEADD('DAY', -1, CURRENT_DATE), 7),
+       (DATEADD('DAY', -1, CURRENT_DATE), 8),
+       (CURRENT_DATE, 8),
+       (CURRENT_DATE, 9);
+
+-- INSERT INTO menu_dish (menu_id, dish_id)
+-- VALUES (1, 1),  /* Noma lunch 1, Beef Wellington */
+--        (1, 2),  /* Noma lunch 1, Onion soup */
+--        (2, 1),  /* Noma lunch 2, Beef Wellington */
+--        (2, 3),  /* Noma lunch 2, Peking duck */
+--        (3, 4),  /* Mirazur lunch 1, Chicken salad */
+--        (3, 5),  /* Mirazur lunch 1, Caesar salad */
+--        (4, 5),  /* Mirazur lunch 2, Caesar salad */
+--        (4, 6),  /* Mirazur lunch 2, Potato frittata */
+--        (5, 7),  /* Asador lunch 1, Fish pie */
+--        (5, 8),  /* Asador lunch 1, Hummus */
+--        (6, 8),  /* Asador lunch 2, Hummus */
+--        (6, 9);  /* Asador lunch 2, Chocolate ice cream */
 
 INSERT INTO vote (actual_date, user_id, restaurant_id)
 VALUES ('2020-05-20', 1, 1),

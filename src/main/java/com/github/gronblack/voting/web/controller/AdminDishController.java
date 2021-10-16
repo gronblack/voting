@@ -31,8 +31,8 @@ public class AdminDishController {
 
     @GetMapping
     @Operation(summary = "Get all by restaurant Id (default - all restaurants)", tags = "dishes")
-    public List<Dish> getByFilter(@RequestParam @Nullable Integer restaurantId) {
-        log.info("getByFilter: restaurant {}", restaurantId);
+    public List<Dish> getByRestaurantId(@RequestParam @Nullable Integer restaurantId) {
+        log.info("getByRestaurantId: restaurantId {}", restaurantId);
         return service.getByRestaurantId(restaurantId);
     }
 

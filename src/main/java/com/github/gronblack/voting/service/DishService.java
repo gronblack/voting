@@ -2,14 +2,10 @@ package com.github.gronblack.voting.service;
 
 import com.github.gronblack.voting.error.IllegalRequestDataException;
 import com.github.gronblack.voting.model.Dish;
-import com.github.gronblack.voting.model.Menu;
 import com.github.gronblack.voting.repository.DishRepository;
-import com.github.gronblack.voting.repository.MenuRepository;
 import com.github.gronblack.voting.repository.RestaurantRepository;
 import com.github.gronblack.voting.to.DishTo;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,12 +14,10 @@ import java.util.Optional;
 public class DishService {
     private final DishRepository repository;
     private final RestaurantRepository restRepository;
-    private final MenuRepository menuRepository;
 
-    public DishService(RestaurantRepository restaurantRepository, DishRepository dishRepository, MenuRepository menuRepository) {
+    public DishService(RestaurantRepository restaurantRepository, DishRepository dishRepository) {
         this.restRepository = restaurantRepository;
         this.repository = dishRepository;
-        this.menuRepository = menuRepository;
     }
 
     public List<Dish> getByRestaurantId(Integer restaurantId) {
@@ -39,26 +33,13 @@ public class DishService {
         return repository.save(dish);
     }
 
-    public Dish checkBelong(int id, int restaurantId) {
-        return repository.get(id, restaurantId).orElseThrow(
+    public void checkBelong(int id, int restaurantId) {
+        repository.get(id, restaurantId).orElseThrow(
                 () -> new IllegalRequestDataException(String.format("Dish [id=%s] doesn't belong to Restaurant [id=%s]", id, restaurantId)));
     }
 
-    public void removeAllDishesFromMenu(int restaurantId) {
-        // https://www.baeldung.com/convert-array-to-list-and-list-to-array#1-using-plain-java
-        removeFromMenu(restaurantId, repository.getByRestaurantId(restaurantId).toArray(new Dish[0]));
-    }
-
-    public void removeFromMenu(int restaurantId, Dish... dishes) {
-        List<Menu> menus = menuRepository.getByRestaurantIdLoadDishes(restaurantId);
-        menus.forEach(menu -> menu.removeDishes(dishes));
-        menuRepository.saveAllAndFlush(menus);
-    }
-
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    //@Transactional(propagation = Propagation.REQUIRES_NEW)
     public void delete(int id) {
-        Dish dish = repository.getById(id);
-        removeFromMenu(dish.getRestaurant().id(), dish);
         repository.deleteExisted(id);
     }
 }

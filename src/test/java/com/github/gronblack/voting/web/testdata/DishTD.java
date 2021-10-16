@@ -11,7 +11,7 @@ public class DishTD {
     public static final int DISH_9_ID = 9;
     public static final int RESTAURANT_WITHOUT_DISH_1_ID = 2;
 
-private static final Restaurant restaurantNoma = new Restaurant(1, "Noma", "+45-3296-3297");
+    private static final Restaurant restaurantNoma = new Restaurant(1, "Noma", "+45-3296-3297");
     private static final Restaurant restaurantMirazur = new Restaurant(2, "Mirazur", "+33-4-92-41-8686");
     private static final Restaurant restaurantAsador = new Restaurant(3, "Asador", "+7-495-953-1564");
 

@@ -9,16 +9,12 @@ import lombok.Value;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.io.Serial;
 import java.io.Serializable;
 
 @Value
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class UserTo extends NamedTo implements HasIdAndEmail, Serializable {
-
-    @Serial
-    private static final long serialVersionUID = 7747547401459053473L;
 
     @Email
     @NotBlank

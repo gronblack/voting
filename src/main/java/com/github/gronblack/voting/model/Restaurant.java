@@ -19,7 +19,7 @@ import javax.persistence.Table;
 @ToString(callSuper = true)
 public class Restaurant extends NamedEntity {
 
-    @Column(name = "phone", nullable = false)
+    @Column(name = "phone", unique = true, nullable = false)
     @PhoneNumber
     @NoHtml
     protected String phone;

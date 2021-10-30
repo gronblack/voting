@@ -18,11 +18,12 @@ public class VoteTD {
     public static final MatcherFactory.Matcher<VoteTo> VOTE_TO_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(VoteTo.class, "id");
     public static final MatcherFactory.Matcher<Rating> RATING_MATCHER = MatcherFactory.usingEqualsComparator(Rating.class);
 
-    public static final int USER_VOTE_TODAY_ID = 6;
-    public static final Vote userVote6Today = new Vote(USER_VOTE_TODAY_ID, currentDate(), UserTD.user, restaurantMirazur);
+    public static final int USER_VOTE_TODAY_ID = 10;
+    public static final Vote userVote10Today = new Vote(USER_VOTE_TODAY_ID, currentDate(), UserTD.user, restaurantMirazur);
 
     public static final VoteTo userVoteTo1 = new VoteTo(1, LocalDate.of(2020, Month.MAY, 20), RestaurantTD.RESTAURANT_NOMA_ID);
     public static final VoteTo userVoteTo4 = new VoteTo(4, LocalDate.of(2020, Month.MAY, 21), RestaurantTD.RESTAURANT_NOMA_ID);
+    public static final VoteTo userVoteTo10 = new VoteTo(10, currentDate(), RestaurantTD.RESTAURANT_MIRAZUR_ID);
 
     public static final Rating[] ratingToday = new Rating[] { new Rating(2, 2) };
     public static final Rating[] ratingOnDate = new Rating[] { new Rating(1, 2), new Rating(3, 1) };

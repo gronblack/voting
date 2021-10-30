@@ -48,7 +48,14 @@ public class VoteController {
             endDate = currentDate();
         }
         log.info("getByFilter: user {}, restaurant {}, dates({} - {})", userId, restaurantId, startDate, endDate);
-        return repository.getByFilterForUser(userId, restaurantId, startDate, endDate);
+        return repository.getByFilter(userId, restaurantId, startDate, endDate);
+    }
+
+    @GetMapping("/{id}")
+    @Operation(summary = "Get by id", tags = "votes")
+    public ResponseEntity<VoteTo> get(@AuthenticationPrincipal AuthUser authUser, @PathVariable int id) {
+        log.info("get {}", id);
+        return ResponseEntity.of(repository.get(authUser.id(), id));
     }
 
     @GetMapping("/rating")
